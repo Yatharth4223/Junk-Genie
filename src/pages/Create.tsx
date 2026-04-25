@@ -1,29 +1,138 @@
 import { useRef, useState } from "react";
-import { Camera, Upload, Image as ImageIcon, X, ArrowLeft, Sparkles } from "lucide-react";
+import { Camera, Upload, Image as ImageIcon, X, ArrowLeft, Sparkles, Loader2, Download, AlertCircle } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { JunkNav } from "@/components/JunkNav";
 import { JunkFooter } from "@/components/JunkFooter";
+import { detectFromBase64, type VisionResult } from "@/lib/vision";
+import { toast } from "sonner";
+
+const MAX_IMAGES = 5;
+
+type ImageItem = {
+  id: string;
+  file: File;
+  preview: string;
+  status: "pending" | "analyzing" | "done" | "error";
+  result?: VisionResult;
+  error?: string;
+};
+
+function safeName(name: string) {
+  return name.replace(/\.[^.]+$/, "").replace(/[^a-z0-9-_]+/gi, "_").toLowerCase();
+}
+
+function downloadJSON(filename: string, payload: unknown) {
+  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(() => URL.revokeObjectURL(url), 0);
+}
 
 const Create = () => {
   const navigate = useNavigate();
   const [mode, setMode] = useState<"none" | "upload">("none");
-  const [preview, setPreview] = useState<string | null>(null);
-  const [fileName, setFileName] = useState<string | null>(null);
+  const [items, setItems] = useState<ImageItem[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    setFileName(file.name);
-    const reader = new FileReader();
-    reader.onload = () => setPreview(reader.result as string);
-    reader.readAsDataURL(file);
+  const readAsDataURL = (file: File) =>
+    new Promise<string>((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+
+  const analyzeItem = async (item: ImageItem) => {
+    setItems((prev) =>
+      prev.map((i) => (i.id === item.id ? { ...i, status: "analyzing" } : i)),
+    );
+    try {
+      const base64 = item.preview.split(",")[1];
+      const result = await detectFromBase64(base64);
+      setItems((prev) =>
+        prev.map((i) => (i.id === item.id ? { ...i, status: "done", result } : i)),
+      );
+      // Auto-download per-image JSON
+      const payload = {
+        image: {
+          name: item.file.name,
+          size: item.file.size,
+          type: item.file.type,
+          lastModified: item.file.lastModified,
+          analyzedAt: new Date().toISOString(),
+        },
+        vision: result,
+      };
+      const stamp = new Date().toISOString().replace(/[:.]/g, "-");
+      downloadJSON(`${safeName(item.file.name)}_${stamp}.json`, payload);
+    } catch (err: any) {
+      setItems((prev) =>
+        prev.map((i) =>
+          i.id === item.id ? { ...i, status: "error", error: err?.message ?? "Failed" } : i,
+        ),
+      );
+      toast.error(`Couldn't analyze ${item.file.name}`, { description: err?.message });
+    }
   };
 
-  const clearPreview = () => {
-    setPreview(null);
-    setFileName(null);
+  const handleFiles = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files ?? []);
+    if (!files.length) return;
+
+    const slotsLeft = MAX_IMAGES - items.length;
+    if (slotsLeft <= 0) {
+      toast.error(`You can upload up to ${MAX_IMAGES} images.`);
+      return;
+    }
+    const accepted = files.slice(0, slotsLeft);
+    if (files.length > accepted.length) {
+      toast.warning(`Only added ${accepted.length} of ${files.length} (max ${MAX_IMAGES}).`);
+    }
+
+    const newItems: ImageItem[] = await Promise.all(
+      accepted.map(async (file) => ({
+        id: `${file.name}-${file.lastModified}-${Math.random().toString(36).slice(2, 8)}`,
+        file,
+        preview: await readAsDataURL(file),
+        status: "pending" as const,
+      })),
+    );
+
+    setItems((prev) => [...prev, ...newItems]);
     if (fileInputRef.current) fileInputRef.current.value = "";
+
+    // Kick off analysis for each new item in parallel
+    newItems.forEach(analyzeItem);
+  };
+
+  const removeItem = (id: string) => {
+    setItems((prev) => prev.filter((i) => i.id !== id));
+  };
+
+  const clearAll = () => {
+    setItems([]);
+    if (fileInputRef.current) fileInputRef.current.value = "";
+  };
+
+  const redownload = (item: ImageItem) => {
+    if (!item.result) return;
+    const payload = {
+      image: {
+        name: item.file.name,
+        size: item.file.size,
+        type: item.file.type,
+        lastModified: item.file.lastModified,
+        analyzedAt: new Date().toISOString(),
+      },
+      vision: item.result,
+    };
+    const stamp = new Date().toISOString().replace(/[:.]/g, "-");
+    downloadJSON(`${safeName(item.file.name)}_${stamp}.json`, payload);
   };
 
   return (
@@ -84,12 +193,12 @@ const Create = () => {
             <div className="w-16 h-16 rounded-2xl bg-bubble-pink/40 border-2 border-grape flex items-center justify-center mb-5 group-hover:-rotate-6 transition-transform">
               <Upload className="w-8 h-8 text-grape" strokeWidth={2.5} />
             </div>
-            <h2 className="font-block text-2xl uppercase mb-2">Upload a pic 🖼️</h2>
+            <h2 className="font-block text-2xl uppercase mb-2">Upload pics 🖼️</h2>
             <p className="font-mono text-sm text-ink-soft mb-5">
-              Already snapped it? Drop in a photo from your phone or computer.
+              Already snapped them? Drop up to {MAX_IMAGES} photos &mdash; we'll ID each one live.
             </p>
             <span className="inline-flex items-center gap-2 bg-grape text-paper px-4 py-2 font-block text-xs uppercase rounded-xl">
-              Choose image
+              Choose images
             </span>
           </button>
         </div>
@@ -99,40 +208,123 @@ const Create = () => {
           ref={fileInputRef}
           type="file"
           accept="image/*"
-          onChange={handleFile}
+          multiple
+          onChange={handleFiles}
           className="hidden"
         />
 
         {/* Result panels */}
-        {mode === "upload" && preview && (
+        {mode === "upload" && items.length > 0 && (
           <div className="mt-10 bg-paper border-2 border-ink rounded-2xl p-6 shadow-brut-sm">
-            <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center justify-between mb-5 flex-wrap gap-3">
               <div className="flex items-center gap-2 font-mono text-xs uppercase tracking-widest">
                 <ImageIcon className="w-4 h-4 text-grape" />
-                <span className="truncate max-w-[60vw] md:max-w-md">{fileName}</span>
+                <span>{items.length} / {MAX_IMAGES} images</span>
               </div>
-              <button
-                onClick={clearPreview}
-                className="inline-flex items-center gap-1 font-mono text-xs uppercase tracking-widest text-ink-soft hover:text-grape transition-colors"
-              >
-                <X className="w-4 h-4" /> remove
-              </button>
+              <div className="flex gap-2">
+                {items.length < MAX_IMAGES && (
+                  <button
+                    onClick={() => fileInputRef.current?.click()}
+                    className="inline-flex items-center gap-1 px-3 py-1.5 font-mono text-xs uppercase tracking-widest border-2 border-ink rounded-lg bg-paper hover:bg-eco-sage/40 transition-colors"
+                  >
+                    <Upload className="w-3.5 h-3.5" /> add more
+                  </button>
+                )}
+                <button
+                  onClick={clearAll}
+                  className="inline-flex items-center gap-1 px-3 py-1.5 font-mono text-xs uppercase tracking-widest text-ink-soft hover:text-grape transition-colors"
+                >
+                  <X className="w-3.5 h-3.5" /> clear all
+                </button>
+              </div>
             </div>
-            <div className="rounded-xl overflow-hidden border-2 border-ink bg-eco-sage/20 flex items-center justify-center max-h-[480px]">
-              <img
-                src={preview}
-                alt="Your uploaded junk preview"
-                className="max-h-[480px] w-auto object-contain"
-              />
+
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {items.map((item) => (
+                <div
+                  key={item.id}
+                  className="border-2 border-ink rounded-xl overflow-hidden bg-eco-sage/10 flex flex-col"
+                >
+                  <div className="relative aspect-square bg-eco-sage/20 flex items-center justify-center overflow-hidden">
+                    <img
+                      src={item.preview}
+                      alt={item.file.name}
+                      className="w-full h-full object-cover"
+                    />
+                    <button
+                      onClick={() => removeItem(item.id)}
+                      className="absolute top-2 right-2 w-7 h-7 rounded-full bg-paper border-2 border-ink flex items-center justify-center hover:bg-grape hover:text-paper transition-colors"
+                      aria-label="Remove image"
+                    >
+                      <X className="w-3.5 h-3.5" />
+                    </button>
+                    {item.status === "analyzing" && (
+                      <div className="absolute inset-0 bg-ink/40 flex items-center justify-center">
+                        <div className="bg-paper border-2 border-ink rounded-lg px-3 py-1.5 flex items-center gap-2">
+                          <Loader2 className="w-3.5 h-3.5 animate-spin text-grape" />
+                          <span className="font-mono text-[11px] uppercase tracking-widest">Analyzing</span>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="p-3 flex-1 flex flex-col gap-2">
+                    <div className="font-mono text-[11px] text-ink-soft truncate" title={item.file.name}>
+                      {item.file.name}
+                    </div>
+
+                    {item.status === "error" && (
+                      <div className="flex items-start gap-1.5 text-[11px] font-mono text-grape">
+                        <AlertCircle className="w-3.5 h-3.5 flex-shrink-0 mt-0.5" />
+                        <span>{item.error}</span>
+                      </div>
+                    )}
+
+                    {item.status === "done" && item.result && (
+                      <>
+                        <div className="flex flex-wrap gap-1.5">
+                          {(() => {
+                            const tags = [
+                              ...(item.result.objects ?? []).map((o) => ({ label: o.name, score: o.score })),
+                              ...(item.result.labels ?? []).map((l) => ({ label: l.description, score: l.score })),
+                            ];
+                            const seen = new Set<string>();
+                            const unique = tags.filter((t) => {
+                              const k = t.label.toLowerCase();
+                              if (seen.has(k)) return false;
+                              seen.add(k);
+                              return true;
+                            }).slice(0, 5);
+                            return unique.map((t, idx) => (
+                              <span
+                                key={`${t.label}-${idx}`}
+                                className="inline-flex items-center gap-1 bg-eco-sage/40 border border-eco-forest rounded-full px-2 py-0.5 font-mono text-[10px]"
+                                title={`${Math.round((t.score ?? 0) * 100)}% confidence`}
+                              >
+                                {t.label}
+                                <span className="text-ink-soft">{Math.round((t.score ?? 0) * 100)}%</span>
+                              </span>
+                            ));
+                          })()}
+                        </div>
+                        <button
+                          onClick={() => redownload(item)}
+                          className="mt-auto inline-flex items-center justify-center gap-1.5 px-2.5 py-1 font-mono text-[10px] uppercase tracking-widest border-2 border-ink rounded-lg bg-paper hover:bg-eco-sage/40 transition-colors"
+                        >
+                          <Download className="w-3 h-3" /> json
+                        </button>
+                      </>
+                    )}
+                  </div>
+                </div>
+              ))}
             </div>
-            <div className="mt-5 flex flex-col sm:flex-row gap-3 justify-end">
+
+            <div className="mt-6 flex justify-end">
               <button
-                onClick={clearPreview}
-                className="px-5 py-2.5 font-block text-sm uppercase rounded-xl border-2 border-ink bg-paper hover:bg-eco-sage/40 transition-colors"
+                disabled={!items.some((i) => i.status === "done")}
+                className="inline-flex items-center justify-center gap-2 px-5 py-2.5 font-block text-sm uppercase rounded-xl bg-grape text-paper shadow-brut-sm hover:bg-eco-forest transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Pick another
-              </button>
-              <button className="inline-flex items-center justify-center gap-2 px-5 py-2.5 font-block text-sm uppercase rounded-xl bg-grape text-paper shadow-brut-sm hover:bg-eco-forest transition-colors">
                 <Sparkles className="w-4 h-4" /> Make magic
               </button>
             </div>
