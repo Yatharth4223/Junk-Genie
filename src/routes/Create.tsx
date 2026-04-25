@@ -3,7 +3,7 @@ import { Camera, Upload, Image as ImageIcon, X, ArrowLeft, Sparkles, Loader2, Do
 import { Link, useNavigate } from "react-router-dom";
 import { JunkNav } from "@/components/JunkNav";
 import { JunkFooter } from "@/components/JunkFooter";
-import { detectFromBase64, type VisionResult } from "@/lib/vision";
+import { detectFromBase64, topTwoByConfidence, type VisionResult } from "@/lib/vision";
 import { toast } from "sonner";
 
 const MAX_IMAGES = 5;
@@ -240,7 +240,9 @@ const Create = () => {
             </div>
 
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {items.map((item) => (
+              {items.map((item) => {
+                const top2 = item.result ? topTwoByConfidence(item.result) : [];
+                return (
                 <div
                   key={item.id}
                   className="border-2 border-ink rounded-xl overflow-hidden bg-eco-sage/10 flex flex-col"
@@ -273,6 +275,12 @@ const Create = () => {
                       {item.file.name}
                     </div>
 
+                    {item.status === "done" && item.result && top2.length > 0 && (
+                      <div className="font-block text-xs uppercase tracking-wide text-ink">
+                        {top2[0].label}
+                      </div>
+                    )}
+
                     {item.status === "error" && (
                       <div className="flex items-start gap-1.5 text-[11px] font-mono text-grape">
                         <AlertCircle className="w-3.5 h-3.5 flex-shrink-0 mt-0.5" />
@@ -283,29 +291,16 @@ const Create = () => {
                     {item.status === "done" && item.result && (
                       <>
                         <div className="flex flex-wrap gap-1.5">
-                          {(() => {
-                            const tags = [
-                              ...(item.result.objects ?? []).map((o) => ({ label: o.name, score: o.score })),
-                              ...(item.result.labels ?? []).map((l) => ({ label: l.description, score: l.score })),
-                            ];
-                            const seen = new Set<string>();
-                            const unique = tags.filter((t) => {
-                              const k = t.label.toLowerCase();
-                              if (seen.has(k)) return false;
-                              seen.add(k);
-                              return true;
-                            }).slice(0, 5);
-                            return unique.map((t, idx) => (
-                              <span
-                                key={`${t.label}-${idx}`}
-                                className="inline-flex items-center gap-1 bg-eco-sage/40 border border-eco-forest rounded-full px-2 py-0.5 font-mono text-[10px]"
-                                title={`${Math.round((t.score ?? 0) * 100)}% confidence`}
-                              >
-                                {t.label}
-                                <span className="text-ink-soft">{Math.round((t.score ?? 0) * 100)}%</span>
-                              </span>
-                            ));
-                          })()}
+                          {top2.map((t, idx) => (
+                            <span
+                              key={`${t.label}-${idx}`}
+                              className="inline-flex items-center gap-1 bg-eco-sage/40 border border-eco-forest rounded-full px-2 py-0.5 font-mono text-[10px]"
+                              title={`${Math.round(t.score * 100)}% confidence`}
+                            >
+                              {t.label}
+                              <span className="text-ink-soft">{Math.round(t.score * 100)}%</span>
+                            </span>
+                          ))}
                         </div>
                         <button
                           onClick={() => redownload(item)}
@@ -317,7 +312,8 @@ const Create = () => {
                     )}
                   </div>
                 </div>
-              ))}
+                );
+              })}
             </div>
 
             <div className="mt-6 flex justify-end">

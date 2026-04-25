@@ -22,3 +22,12 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Google Cloud service account keys (never commit)
+server/google-credentials.json
+**/google-credentials.json
+*service-account*.json
+
+# Next.js
+.next/
+

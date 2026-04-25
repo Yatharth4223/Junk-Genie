@@ -1,4 +1,5 @@
 import junkPile from "@/assets/junk-pile.png";
+import { staticImageUrl } from "@/lib/staticImageUrl";
 import { ArrowRight, Sparkles, Wand2, Star, Heart, Leaf } from "lucide-react";
 
 export const HeroCollage = () => {
@@ -70,7 +71,7 @@ export const HeroCollage = () => {
           {/* Main image with soft shadow */}
           <div className="relative z-10">
             <img
-              src={junkPile}
+              src={staticImageUrl(junkPile)}
               alt="A pile of household items ready to become toys"
               width={500} height={500}
               className="w-full max-w-[420px] drop-shadow-2xl animate-float-up"

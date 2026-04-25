@@ -1,6 +1,7 @@
 import { Github } from "lucide-react";
 import genieLogo from "@/assets/genie-logo.png";
 import hackathonLogo from "@/assets/hackathon.png";
+import { staticImageUrl } from "@/lib/staticImageUrl";
 
 export const JunkFooter = () => (
   <footer className="ink-bg border-t-2 border-ink relative overflow-hidden">
@@ -13,13 +14,13 @@ export const JunkFooter = () => (
       <div className="md:col-span-2">
         <div className="flex items-center gap-3 mb-3">
           <img
-            src={genieLogo}
+            src={staticImageUrl(genieLogo)}
             alt="JunkGenie mascot — a friendly purple genie"
             width={28}
             height={28}
             className="w-7 h-7 object-contain drop-shadow-md"
           />
-          <div className="font-block text-2xl text-paper">JUNk<span className="text-rust">GENIE</span></div>
+          <div className="font-block text-2xl text-paper">JUNK<span className="text-rust">GENIE</span></div>
         </div>
         <p className="font-mono text-sm text-paper/70 max-w-md leading-relaxed">
           Made with love in 36 hours for the <span className="font-hand text-caution text-lg">Bearhacks</span> hackathon.
@@ -35,7 +36,7 @@ export const JunkFooter = () => (
       </div>
       <div>
         <div className="font-block uppercase text-paper text-sm mb-4">
-          See Implementation!
+          Check Implementation!
         </div>
         <div className="flex items-center gap-3">
           <a href="#" className="grid place-items-center w-10 h-10 border-2 border-paper text-paper hover:bg-rust hover:border-rust transition">
@@ -47,7 +48,7 @@ export const JunkFooter = () => (
             className="grid place-items-center w-10 h-10 border-2 border-paper text-paper hover:bg-rust hover:border-rust transition"
           >
             <img
-              src={hackathonLogo}
+              src={staticImageUrl(hackathonLogo)}
               alt="Hackathon logo"
               className="w-6 h-6 object-contain"
             />
