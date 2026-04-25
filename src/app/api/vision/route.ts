@@ -41,10 +41,8 @@ export async function POST(req: Request) {
     const [annotations] = await client.annotateImage({
       image: { content },
       features: [
-        { type: "LABEL_DETECTION", maxResults: 8 },
-        { type: "OBJECT_LOCALIZATION", maxResults: 5 },
-        { type: "WEB_DETECTION", maxResults: 5 },
-        { type: "IMAGE_PROPERTIES" },
+        { type: "OBJECT_LOCALIZATION", maxResults: 6 },
+        { type: "LABEL_DETECTION", maxResults: 6 },
       ],
     });
 
