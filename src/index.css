@@ -19,6 +19,12 @@
     --red-stamp:       2  78% 48%;     /* red ink stamp */
     --tape:            45 88% 72% / 0.85;
 
+    /* fun pops */
+    --bubble-pink:     330 85% 70%;
+    --sky-blue:        200 85% 65%;
+    --grass:           145 55% 50%;
+    --grape:           270 60% 65%;
+
     /* shadcn aliases */
     --background: var(--paper);
     --foreground: var(--ink);
