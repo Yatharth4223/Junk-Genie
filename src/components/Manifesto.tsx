@@ -1,10 +1,10 @@
-import { Ghost, Sparkles, Hammer, PartyPopper } from "lucide-react";
+import { Smile, Sparkles, Hammer, PartyPopper } from "lucide-react";
 
 const points = [
-  { icon: Ghost, t: "Be a goblin", b: "Hoard junk. Cackle. Build dumb stuff. Repeat." },
-  { icon: Sparkles, t: "Vibes > skills", b: "If it stands up for 4 seconds, it counts." },
-  { icon: Hammer, t: "Lopsided rules", b: "Wonky is the new minimalist. Glue gun forever." },
-  { icon: PartyPopper, t: "Show it off", b: "Post the Frankenstein result. We'll cheer loud." },
+  { icon: Smile, t: "Everyone plays", b: "Kids, parents, grandparents — anyone can join the fun." },
+  { icon: Sparkles, t: "Mess is OK", b: "Wobbly, glittery, glued sideways. We love it all." },
+  { icon: Hammer, t: "Try & giggle", b: "It doesn't have to be perfect. It just has to be yours." },
+  { icon: PartyPopper, t: "Show & cheer", b: "Share your creation and we'll throw confetti for you." },
 ];
 
 export const Manifesto = () => (
@@ -12,16 +12,16 @@ export const Manifesto = () => (
     {/* big rotating word */}
     <div className="absolute inset-0 grid place-items-center pointer-events-none opacity-[0.06]">
       <div className="font-block uppercase text-[20vw] leading-none whitespace-nowrap text-paper">
-        WEIRD · IS · GOOD
+        FUN · FOR · ALL
       </div>
     </div>
 
     <div className="relative mx-auto max-w-7xl px-6">
       <div className="max-w-3xl">
-        <span className="stamp text-xs">house rules 🪩</span>
+        <span className="stamp text-xs">house rules 🎈</span>
         <h2 className="mt-6 font-display text-5xl md:text-7xl text-paper leading-none">
-          We don't make <span className="line-through text-paper/40">products</span>. <br/>
-          We make <span className="font-marker text-caution">weird little guys.</span> 🤖
+          We don't make <span className="line-through text-paper/40">stuff</span>. <br/>
+          We make <span className="font-marker text-caution">happy memories.</span> 🤗
         </h2>
       </div>
 
