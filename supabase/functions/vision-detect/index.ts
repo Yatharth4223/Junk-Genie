@@ -137,6 +137,8 @@ Deno.serve(async (req) => {
               features: [
                 { type: "LABEL_DETECTION", maxResults: 8 },
                 { type: "OBJECT_LOCALIZATION", maxResults: 5 },
+                { type: "WEB_DETECTION", maxResults: 5 },
+                { type: "IMAGE_PROPERTIES" },
               ],
             },
           ],
@@ -159,6 +161,8 @@ Deno.serve(async (req) => {
       .map((l: any) => ({ description: l.description, score: l.score }));
     const objects: { name: string; score: number }[] = (annotations.localizedObjectAnnotations ?? [])
       .map((o: any) => ({ name: o.name, score: o.score }));
+    const web = annotations.webDetection ?? null;
+    const imageProperties = annotations.imagePropertiesAnnotation ?? null;
 
     const merged = [
       ...objects.map((o) => o.name),
@@ -168,7 +172,7 @@ Deno.serve(async (req) => {
     const suggestions = suggestionsFor(merged);
 
     return new Response(
-      JSON.stringify({ top, labels, objects, suggestions }),
+      JSON.stringify({ top, labels, objects, web, imageProperties, suggestions }),
       { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } },
     );
   } catch (err) {
