@@ -28,7 +28,7 @@ export const HeroCollage = () => {
             <span className="text-eco-forest font-block">stuff</span>
             <br />
             <span className="text-ink">into</span>{" "}
-            <span className="text-rust font-marker">awesome toys!</span>
+            <span className="text-rust font-marker">awesome Crafts!</span>
           </h1>
 
           <p className="max-w-md font-mono text-base leading-relaxed text-ink-soft mb-8">

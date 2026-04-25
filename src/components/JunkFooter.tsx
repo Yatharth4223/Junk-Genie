@@ -1,4 +1,6 @@
-import { Recycle, Github, Twitter, Instagram } from "lucide-react";
+import { Github } from "lucide-react";
+import genieLogo from "@/assets/genie-logo.png";
+import hackathonLogo from "@/assets/hackathon.png";
 
 export const JunkFooter = () => (
   <footer className="ink-bg border-t-2 border-ink relative overflow-hidden">
@@ -10,12 +12,17 @@ export const JunkFooter = () => (
     <div className="mx-auto max-w-7xl px-6 py-14 grid md:grid-cols-4 gap-10">
       <div className="md:col-span-2">
         <div className="flex items-center gap-3 mb-3">
-          <Recycle className="w-7 h-7 text-rust"/>
-          <div className="font-block text-2xl text-paper">JUNK<span className="text-rust">GENIE</span></div>
+          <img
+            src={genieLogo}
+            alt="JunkGenie mascot — a friendly purple genie"
+            width={28}
+            height={28}
+            className="w-7 h-7 object-contain drop-shadow-md"
+          />
+          <div className="font-block text-2xl text-paper">JUNk<span className="text-rust">GENIE</span></div>
         </div>
         <p className="font-mono text-sm text-paper/70 max-w-md leading-relaxed">
-          Made with love in 36 hours for the <span className="font-hand text-caution text-lg">Break The Norm</span> hackathon.
-          Powered by 🧃 juice boxes, 🧠 friendly AI, and 🎨 crafty kids everywhere.
+          Made with love in 36 hours for the <span className="font-hand text-caution text-lg">Bearhacks</span> hackathon.
         </p>
       </div>
       <div>
@@ -27,13 +34,24 @@ export const JunkFooter = () => (
         </ul>
       </div>
       <div>
-        <div className="font-block uppercase text-paper text-sm mb-4">Say Hi 👋</div>
-        <div className="flex gap-3">
-          {[Github, Twitter, Instagram].map((Icon, i) => (
-            <a key={i} href="#" className="grid place-items-center w-10 h-10 border-2 border-paper text-paper hover:bg-rust hover:border-rust transition">
-              <Icon className="w-4 h-4"/>
-            </a>
-          ))}
+        <div className="font-block uppercase text-paper text-sm mb-4">
+          See Implementation!
+        </div>
+        <div className="flex items-center gap-3">
+          <a href="#" className="grid place-items-center w-10 h-10 border-2 border-paper text-paper hover:bg-rust hover:border-rust transition">
+            <Github className="w-4 h-4" />
+          </a>
+
+          <a
+            href="#"
+            className="grid place-items-center w-10 h-10 border-2 border-paper text-paper hover:bg-rust hover:border-rust transition"
+          >
+            <img
+              src={hackathonLogo}
+              alt="Hackathon logo"
+              className="w-6 h-6 object-contain"
+            />
+          </a>
         </div>
       </div>
     </div>

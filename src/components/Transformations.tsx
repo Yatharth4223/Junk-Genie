@@ -86,7 +86,7 @@ export const Transformations = () => {
           </div>
           <div className="md:col-span-2">
             <div className="font-display text-4xl md:text-5xl leading-tight">
-              <span className="font-marker text-rust">47,283</span> happy little projects built last month by families who said <span className="font-hand text-grape">"hey, what if we made THIS?"</span> 🎨🛠️
+              <span className="font-marker text-rust"></span> happy little projects built by families who said <span className="font-hand text-grape">"hey, what if we made THIS?"</span> 🎨🛠️
             </div>
           </div>
         </div>
