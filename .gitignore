@@ -46,3 +46,11 @@ wheels/
 *.egg
 MANIFEST
 output/
+
+# Google Cloud service account keys (never commit)
+server/google-credentials.json
+**/google-credentials.json
+*service-account*.json
+
+# Next.js
+.next/

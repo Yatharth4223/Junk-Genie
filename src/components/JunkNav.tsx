@@ -1,6 +1,7 @@
 import { Camera } from "lucide-react";
 import { Link } from "react-router-dom";
 import genieLogo from "@/assets/genie-logo.png";
+import { staticImageUrl } from "@/lib/staticImageUrl";
 
 export const JunkNav = () => (
   <header className="relative z-30 border-b-2 border-eco-forest bg-paper/90 backdrop-blur-sm">
@@ -8,7 +9,7 @@ export const JunkNav = () => (
       <a href="#" className="flex items-center gap-3 group">
         <div className="relative w-12 h-12 group-hover:rotate-6 group-hover:scale-110 transition-transform">
           <img
-            src={genieLogo}
+            src={staticImageUrl(genieLogo)}
             alt="JunkGenie mascot — a friendly purple genie"
             width={48}
             height={48}
@@ -29,7 +30,7 @@ export const JunkNav = () => (
         to="/create"
         className="flex items-center gap-2 bg-grape text-paper px-5 py-2.5 font-block text-sm uppercase rounded-xl shadow-brut-sm hover:bg-eco-forest transition-colors"
       >
-        <Camera className="w-4 h-4" /> Rub the lamp 🪄
+        <Camera className="w-4 h-4" /> Upload & generate 🪄
       </Link>
     </div>
   </header>

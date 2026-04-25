@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { staticImageUrl } from "@/lib/staticImageUrl";
 import beforeCans from "@/assets/before-cans.png";
 import afterPlanter from "@/assets/after-planter.png";
 import beforePallet from "@/assets/before-pallet.png";
@@ -41,12 +42,12 @@ export const Transformations = () => {
               >
                 <div className="relative aspect-[4/3] bg-paper border-2 border-ink overflow-hidden halftone">
                   <img
-                    src={it.before} alt={it.title}
+                    src={staticImageUrl(it.before)} alt={it.title}
                     width={1024} height={768} loading="lazy"
                     className={`absolute inset-0 w-full h-full object-contain p-6 transition-opacity duration-500 ${showAfter[i] ? 'opacity-0' : 'opacity-100'}`}
                   />
                   <img
-                    src={it.after} alt={it.to}
+                    src={staticImageUrl(it.after)} alt={it.to}
                     width={1024} height={768} loading="lazy"
                     className={`absolute inset-0 w-full h-full object-contain p-6 transition-opacity duration-500 ${showAfter[i] ? 'opacity-100' : 'opacity-0'}`}
                   />
@@ -77,7 +78,7 @@ export const Transformations = () => {
           <div className="md:col-span-1 r-l3">
             <div className="bg-paper border-2 border-ink p-3 pb-12 brut-lg relative">
               <span className="tape" style={{top: -12, left: 30}} />
-              <img src={lamp} alt="Mason jar lamp" width={1024} height={1024} loading="lazy"
+              <img src={staticImageUrl(lamp)} alt="Mason jar lamp" width={1024} height={1024} loading="lazy"
                    className="w-full aspect-square object-contain bg-paper-dark border border-ink" />
               <div className="absolute bottom-3 left-0 right-0 text-center font-hand text-2xl text-ink">
                 jar → vibe lamp 💡
