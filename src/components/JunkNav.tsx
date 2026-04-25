@@ -21,11 +21,5 @@ export const JunkNav = () => (
         <Camera className="w-4 h-4" /> Try it 🪄
       </button>
     </div>
-    {/* caution tape */}
-    <div className="h-3 bg-caution relative overflow-hidden border-t border-ink">
-      <div className="absolute inset-0" style={{
-        backgroundImage: 'repeating-linear-gradient(45deg, hsl(var(--ink)) 0 12px, transparent 12px 28px)'
-      }} />
-    </div>
   </header>
 );
