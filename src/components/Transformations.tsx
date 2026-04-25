@@ -6,8 +6,8 @@ import afterShelf from "@/assets/after-shelf.png";
 import lamp from "@/assets/upcycled-lamp.png";
 
 const items = [
-  { before: beforeCans, after: afterPlanter, title: "Rusty cans", to: "Succulent garden", time: "1.5 hr", diff: "easy" },
-  { before: beforePallet, after: afterShelf, title: "Broken pallet", to: "Floating bookshelf", time: "3 hr", diff: "medium" },
+  { before: beforeCans, after: afterPlanter, title: "sad rusty cans", to: "lil plant gang 🪴", time: "1.5 hr", diff: "easy peasy" },
+  { before: beforePallet, after: afterShelf, title: "yeeted pallet", to: "floaty book shelf 📚", time: "3 hr", diff: "mildly sweaty" },
 ];
 
 export const Transformations = () => {
@@ -19,14 +19,14 @@ export const Transformations = () => {
       <div className="mx-auto max-w-7xl px-6">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14">
           <div>
-            <span className="font-mono uppercase text-xs tracking-[0.4em] text-rust">// proof of magic</span>
+            <span className="font-mono uppercase text-xs tracking-[0.4em] text-rust">// receipts 🧾</span>
             <h2 className="mt-2 font-display text-5xl md:text-7xl leading-none">
-              Before. <span className="italic">After.</span><br/>
-              <span className="font-marker text-teal text-[0.7em]">click 'em.</span>
+              Yikes. <span className="italic">Yes!</span><br/>
+              <span className="font-marker text-teal text-[0.7em]">poke a card 👇</span>
             </h2>
           </div>
           <p className="font-mono text-sm max-w-sm border-l-4 border-ink pl-4">
-            Real scans from real garages. Click any card to flip between the junk and what it became.
+            Tap a card to watch garbage glow up. No filters, no lies, just before-and-after vibes ✨
           </p>
         </div>
 
@@ -54,7 +54,7 @@ export const Transformations = () => {
                     {showAfter[i] ? 'AFTER' : 'BEFORE'}
                   </div>
                   <div className="absolute bottom-3 right-3 bg-ink text-paper font-mono text-[10px] uppercase px-2 py-1 tracking-widest">
-                    tap to flip ↻
+                    poke me ↻
                   </div>
                 </div>
                 <div className="flex items-end justify-between mt-4">
@@ -63,7 +63,7 @@ export const Transformations = () => {
                     <div className="font-display text-3xl leading-tight">{it.to}</div>
                   </div>
                   <div className="flex gap-2">
-                    <span className="bg-caution border-2 border-ink px-2 py-1 font-mono text-[10px] uppercase brut-sm">{it.time}</span>
+                    <span className="bg-caution border-2 border-ink px-2 py-1 font-mono text-[10px] uppercase brut-sm">⏱ {it.time}</span>
                     <span className="bg-teal text-paper border-2 border-ink px-2 py-1 font-mono text-[10px] uppercase brut-sm">{it.diff}</span>
                   </div>
                 </div>
@@ -80,13 +80,13 @@ export const Transformations = () => {
               <img src={lamp} alt="Mason jar lamp" width={1024} height={1024} loading="lazy"
                    className="w-full aspect-square object-contain bg-paper-dark border border-ink" />
               <div className="absolute bottom-3 left-0 right-0 text-center font-hand text-2xl text-ink">
-                mason jar → mood lamp
+                jar → vibe lamp 💡
               </div>
             </div>
           </div>
           <div className="md:col-span-2">
             <div className="font-display text-4xl md:text-5xl leading-tight">
-              Over <span className="font-marker text-rust">47,283</span> items rescued from landfills last month — by people just like you, who scanned a pile and got an idea.
+              <span className="font-marker text-rust">47,283</span> goofy little projects built last month by people who said "wait... what if i glued this to that?" 🧤🪛
             </div>
           </div>
         </div>

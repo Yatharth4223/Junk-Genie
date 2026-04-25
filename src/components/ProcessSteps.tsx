@@ -1,18 +1,18 @@
 import { Camera, Brain, Hammer } from "lucide-react";
 
 const steps = [
-  { n: "01", icon: Camera, title: "Point & Shoot", note: "snap that mess", body: "Open the scanner, aim at your pile of garage chaos. We see every can, plank and broken thingamajig.", color: "bg-caution", rot: "r-l2" },
-  { n: "02", icon: Brain, title: "Genie Thinks", note: "magic happens", body: "Our AI matches your materials with thousands of project ideas — filtered by skill, time and how weird you want to get.", color: "bg-paper", rot: "r-r1" },
-  { n: "03", icon: Hammer, title: "Build It", note: "go forth & make", body: "Get a step-by-step plan, tool list and a render of what you're making. Then actually finish a project for once.", color: "bg-rust text-paper", rot: "r-l1" },
+  { n: "01", icon: Camera, title: "Snap the mess", note: "yes, that mess", body: "Point your phone at the pile. The crusty toaster, the bent fork, the mystery cable from 2009 — all of it. The grosser the better 🤌", color: "bg-caution", rot: "r-l2" },
+  { n: "02", icon: Brain, title: "Genie squints", note: "thinking noises 🤔", body: "A tiny AI brain looks at your junk and goes 'ohhh i KNOW what this could be'. Then makes a list of suspiciously cool ideas.", color: "bg-paper", rot: "r-r1" },
+  { n: "03", icon: Hammer, title: "Make a thing", note: "send pics pls 📸", body: "Pick an idea, follow the steps, build something gloriously dumb. Show it off. Confuse your roommates. Win at life.", color: "bg-rust text-paper", rot: "r-l1" },
 ];
 
 export const ProcessSteps = () => (
   <section id="process" className="relative kraft border-y-2 border-ink py-24">
     <div className="mx-auto max-w-7xl px-6">
       <div className="flex flex-col items-center mb-16">
-        <span className="font-mono uppercase text-xs tracking-[0.4em] bg-ink text-paper px-3 py-1 mb-4">// the process</span>
+        <span className="font-mono uppercase text-xs tracking-[0.4em] bg-ink text-paper px-3 py-1 mb-4">// how the magic happens</span>
         <h2 className="font-display text-5xl md:text-7xl text-center leading-none">
-          Three steps. <span className="font-marker text-rust">Zero</span> excuses.
+          Three clicks. <span className="font-marker text-rust">One</span> goblin idea. 🧞
         </h2>
       </div>
 

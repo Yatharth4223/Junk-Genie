@@ -10,7 +10,7 @@ export const HeroCollage = () => {
           <div className="marquee-track font-block uppercase text-xs tracking-[0.3em] whitespace-nowrap">
             {Array(2).fill(0).map((_, i) => (
               <div key={i} className="flex items-center gap-6">
-                {["✦ ONE PERSON'S TRASH", "✦ ANOTHER'S MASTERPIECE", "✦ AI POWERED", "✦ BREAK THE NORM", "✦ STOP BUYING START BUILDING", "✦ JUNK = TREASURE", "✦ SCAN. SEE. CREATE."].map((t,j) => (
+                {["🧞 RUB THE LAMP", "🗑️ FEED IT GARBAGE", "✨ GET COOL STUFF", "🤡 NO SKILLS REQUIRED", "🪄 IT'S BASICALLY MAGIC", "🦝 RACCOON APPROVED", "📸 POINT · CLICK · BUILD"].map((t,j) => (
                   <span key={j} className="px-2">{t}</span>
                 ))}
               </div>
@@ -24,49 +24,49 @@ export const HeroCollage = () => {
         <div className="lg:col-span-7 relative z-10">
           {/* stamp */}
           <div className="mb-6 flex items-center gap-4">
-            <div className="stamp text-xs">CERTIFIED · NOT NEW</div>
-            <div className="font-hand text-2xl text-rust rotate-[-4deg]">← yes, you</div>
+            <div className="stamp text-xs">100% NONSENSE</div>
+            <div className="font-hand text-2xl text-rust rotate-[-4deg]">← hi 👋</div>
           </div>
 
           <h1 className="font-display text-[clamp(3rem,8vw,7rem)] leading-[0.88] tracking-tight">
-            <span className="block bg-ink text-paper px-3 py-1 -ml-2 inline-block r-l1">Your</span>{" "}
-            <span className="font-block uppercase italic text-rust">JUNK</span>
+            <span className="block bg-ink text-paper px-3 py-1 -ml-2 inline-block r-l1">that</span>{" "}
+            <span className="font-block uppercase italic text-rust">GUNK</span>
             <br />
-            <span className="font-marker text-teal text-[0.85em] r-r1 inline-block">is begging</span>
+            <span className="font-marker text-teal text-[0.85em] r-r1 inline-block">in your garage?</span>
             <br />
             <span className="relative inline-block">
-              to become
+              it's secretly
               <svg className="absolute -bottom-3 left-0 w-full" height="14" viewBox="0 0 300 14" preserveAspectRatio="none">
                 <path d="M2 8 Q 80 2 150 7 T 298 6" stroke="hsl(var(--rust))" strokeWidth="5" fill="none" strokeLinecap="round"/>
               </svg>
             </span>{" "}
-            <span className="font-block uppercase bg-caution px-3 r-r2 inline-block border-2 border-ink">ART.</span>
+            <span className="font-block uppercase bg-caution px-3 r-r2 inline-block border-2 border-ink">FUN.</span>
           </h1>
 
           <p className="mt-8 max-w-xl font-mono text-base leading-relaxed text-ink-soft border-l-4 border-ink pl-4">
-            Point your phone at that pile in the garage. Our genie reads the rust,
-            the rope, the rotten wood — and conjures up things you can <em className="font-hand text-rust text-xl not-italic">actually make this weekend.</em>
+            Snap a pic of your weird pile of stuff. Our little genie squints at it real hard
+            and spits out <em className="font-hand text-rust text-xl not-italic">fun things you could build this afternoon</em> 🛠️✨
           </p>
 
           <div className="mt-8 flex flex-wrap items-center gap-4">
             <button className="group relative bg-rust text-paper font-block uppercase text-base px-7 py-4 brut hover:bg-ink transition-colors flex items-center gap-3">
               <Wand2 className="w-5 h-5" />
-              Summon the genie
+              Rub the lamp
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition" />
             </button>
             <button className="bg-paper border-2 border-ink font-block uppercase text-base px-6 py-4 brut-sm hover:bg-caution transition-colors">
-              How it works ↓
+              See the chaos ↓
             </button>
-            <div className="font-hand text-2xl text-teal rotate-[-3deg] hidden sm:block">free · no signup</div>
+            <div className="font-hand text-2xl text-teal rotate-[-3deg] hidden sm:block">no login · no shame</div>
           </div>
 
           {/* tag pills */}
           <div className="mt-10 flex flex-wrap gap-2 font-mono text-[11px] uppercase tracking-wider">
             {[
-              { t: "live camera scan", c: "bg-caution" },
-              { t: "AI brain", c: "bg-paper" },
-              { t: "27 craft styles", c: "bg-paper" },
-              { t: "step-by-step plans", c: "bg-paper" },
+              { t: "📸 point camera", c: "bg-caution" },
+              { t: "🧠 wonky AI", c: "bg-paper" },
+              { t: "🎨 silly ideas", c: "bg-paper" },
+              { t: "🍕 weekend vibes", c: "bg-paper" },
             ].map((p,i) => (
               <span key={i} className={`${p.c} border-2 border-ink px-3 py-1.5 brut-sm`}>{p.t}</span>
             ))}
@@ -95,12 +95,12 @@ export const HeroCollage = () => {
           {/* sticky note */}
           <div className="absolute -bottom-4 -left-2 z-20 bg-caution border-2 border-ink p-3 r-l3 brut-sm w-44">
             <div className="font-hand text-lg leading-tight text-ink">
-              "I made $0 of this from $40 of garbage" — me, last weekend
+              "i made a robot out of a toaster lol" — kevin, probably
             </div>
           </div>
           {/* arrow */}
           <div className="absolute top-1/2 -left-4 hidden lg:block z-20 font-hand text-xl text-rust rotate-[-12deg]">
-            real garbage ↗
+            certified gunk ↗
           </div>
         </div>
       </div>
