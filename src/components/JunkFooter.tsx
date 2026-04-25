@@ -14,20 +14,20 @@ export const JunkFooter = () => (
           <div className="font-block text-2xl text-paper">JUNK<span className="text-rust">GENIE</span></div>
         </div>
         <p className="font-mono text-sm text-paper/70 max-w-md leading-relaxed">
-          Built in 36 sleepless hours for the <span className="font-hand text-caution text-lg">Break The Norm</span> hackathon.
-          Powered by ✦ AI ✦ caffeine ✦ and a deep distaste for landfills.
+          Cobbled together in 36 chaotic hours for the <span className="font-hand text-caution text-lg">Break The Norm</span> hackathon.
+          Powered by 🧃 juice boxes, 🧠 questionable AI, and 🦝 raccoon energy.
         </p>
       </div>
       <div>
-        <div className="font-block uppercase text-paper text-sm mb-4">The Goods</div>
+        <div className="font-block uppercase text-paper text-sm mb-4">The Stuff</div>
         <ul className="space-y-2 font-mono text-sm text-paper/70">
-          <li><a className="hover:text-caution" href="#process">Process</a></li>
-          <li><a className="hover:text-caution" href="#gallery">Gallery</a></li>
-          <li><a className="hover:text-caution" href="#manifesto">Manifesto</a></li>
+          <li><a className="hover:text-caution" href="#process">How it works</a></li>
+          <li><a className="hover:text-caution" href="#gallery">Glow-ups</a></li>
+          <li><a className="hover:text-caution" href="#manifesto">House rules</a></li>
         </ul>
       </div>
       <div>
-        <div className="font-block uppercase text-paper text-sm mb-4">Find Us</div>
+        <div className="font-block uppercase text-paper text-sm mb-4">Holler At Us</div>
         <div className="flex gap-3">
           {[Github, Twitter, Instagram].map((Icon, i) => (
             <a key={i} href="#" className="grid place-items-center w-10 h-10 border-2 border-paper text-paper hover:bg-rust hover:border-rust transition">
@@ -38,7 +38,7 @@ export const JunkFooter = () => (
       </div>
     </div>
     <div className="border-t border-paper/20 py-4 text-center font-mono text-[11px] uppercase tracking-[0.3em] text-paper/50">
-      © {new Date().getFullYear()} JunkGenie · made from 100% recycled pixels
+      © {new Date().getFullYear()} JunkGenie · 100% recycled pixels · 0% serious
     </div>
   </footer>
 );

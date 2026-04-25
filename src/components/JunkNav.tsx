@@ -9,16 +9,16 @@ export const JunkNav = () => (
         </div>
         <div className="leading-none">
           <div className="font-block text-2xl tracking-tight">JUNK<span className="text-rust">GENIE</span></div>
-          <div className="font-mono text-[10px] uppercase tracking-[0.25em] text-ink-soft">est. now · zero waste</div>
+          <div className="font-mono text-[10px] uppercase tracking-[0.25em] text-ink-soft">est. yesterday · vibes only</div>
         </div>
       </a>
       <nav className="hidden md:flex items-center gap-1 font-mono text-xs uppercase tracking-widest">
-        <a href="#process" className="px-3 py-2 hover:bg-caution border-2 border-transparent hover:border-ink">Process</a>
-        <a href="#gallery" className="px-3 py-2 hover:bg-caution border-2 border-transparent hover:border-ink">Gallery</a>
-        <a href="#manifesto" className="px-3 py-2 hover:bg-caution border-2 border-transparent hover:border-ink">Manifesto</a>
+        <a href="#process" className="px-3 py-2 hover:bg-caution border-2 border-transparent hover:border-ink">How it works</a>
+        <a href="#gallery" className="px-3 py-2 hover:bg-caution border-2 border-transparent hover:border-ink">Glow-ups</a>
+        <a href="#manifesto" className="px-3 py-2 hover:bg-caution border-2 border-transparent hover:border-ink">House rules</a>
       </nav>
       <button className="flex items-center gap-2 bg-ink text-paper px-4 py-2.5 font-block text-sm uppercase brut-sm hover:bg-rust transition-colors">
-        <Camera className="w-4 h-4" /> Scan now
+        <Camera className="w-4 h-4" /> Try it 🪄
       </button>
     </div>
     {/* caution tape */}
