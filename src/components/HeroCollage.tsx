@@ -1,96 +1,95 @@
 import junkPile from "@/assets/junk-pile.png";
-import { ArrowRight, Sparkles, Wand2, Star, Heart } from "lucide-react";
+import { ArrowRight, Sparkles, Wand2, Star, Heart, Leaf } from "lucide-react";
 
 export const HeroCollage = () => {
   return (
-    <section className="relative overflow-hidden">
-      <div className="relative mx-auto max-w-7xl px-6 pt-16 pb-24 grid lg:grid-cols-12 gap-8 items-center">
-        {/* floating doodles */}
-        <Star className="absolute top-10 left-1/3 w-6 h-6 text-bubble fill-bubble animate-bounce-soft" />
-        <Heart className="absolute bottom-20 left-12 w-5 h-5 text-rust fill-rust animate-bounce-soft" style={{animationDelay:'.6s'}} />
-        <Sparkles className="absolute top-24 right-1/4 w-5 h-5 text-grape" />
-        {/* LEFT — ransom note headline */}
-        <div className="lg:col-span-7 relative z-10">
-          {/* stamp */}
-          <div className="mb-6 flex items-center gap-4">
-            <div className="stamp text-xs">100% SILLY 🎉</div>
-            <div className="font-hand text-2xl text-rust rotate-[-4deg]">← hi 👋</div>
+    <section className="relative overflow-hidden min-h-[85vh] flex items-center">
+      {/* Soft green gradient background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-eco-sage/40 via-paper to-sky/20" />
+      
+      {/* Floating leaves decoration */}
+      <Leaf className="absolute top-20 left-[10%] w-6 h-6 text-eco-leaf animate-bounce-soft" />
+      <Leaf className="absolute top-40 right-[15%] w-5 h-5 text-eco-moss animate-bounce-soft" style={{animationDelay: '0.5s'}} />
+      <Leaf className="absolute bottom-32 left-[20%] w-4 h-4 text-eco-forest animate-bounce-soft" style={{animationDelay: '1s'}} />
+      
+      <div className="relative mx-auto max-w-6xl px-6 py-16 grid lg:grid-cols-2 gap-12 items-center">
+        {/* LEFT — cleaner headline */}
+        <div className="relative z-10">
+          {/* Friendly badge */}
+          <div className="mb-6 flex items-center gap-3">
+            <div className="bg-eco-leaf text-paper px-4 py-2 rounded-full font-block text-sm flex items-center gap-2">
+              <Star className="w-4 h-4 fill-current" />
+              Family Fun!
+            </div>
           </div>
 
-          <h1 className="font-display text-[clamp(3rem,8vw,7rem)] leading-[0.88] tracking-tight">
-            <span className="block bg-ink text-paper px-3 py-1 -ml-2 inline-block r-l1">that</span>{" "}
-            <span className="font-block uppercase italic text-rust">STUFF</span>
+          <h1 className="font-display text-[clamp(2.5rem,6vw,5rem)] leading-[1.1] tracking-tight mb-6">
+            <span className="text-ink">Turn your</span>{" "}
+            <span className="text-eco-forest font-block">stuff</span>
             <br />
-            <span className="font-marker text-teal text-[0.85em] r-r1 inline-block">in your garage?</span>
-            <br />
-            <span className="relative inline-block">
-              it wants to be
-              <svg className="absolute -bottom-3 left-0 w-full" height="14" viewBox="0 0 300 14" preserveAspectRatio="none">
-                <path d="M2 8 Q 80 2 150 7 T 298 6" stroke="hsl(var(--rust))" strokeWidth="5" fill="none" strokeLinecap="round"/>
-              </svg>
-            </span>{" "}
-            <span className="font-block uppercase bg-bubble text-paper px-3 r-r2 inline-block border-2 border-ink">TOYS!</span>
+            <span className="text-ink">into</span>{" "}
+            <span className="text-rust font-marker">awesome toys!</span>
           </h1>
 
-          <p className="mt-8 max-w-xl font-mono text-base leading-relaxed text-ink-soft border-l-4 border-ink pl-4">
-            Take a photo of the random stuff at home. Our friendly genie has a peek
-            and gives you <em className="font-hand text-rust text-xl not-italic">awesome things you and your family can build today!</em> 🛠️✨
+          <p className="max-w-md font-mono text-base leading-relaxed text-ink-soft mb-8">
+            Snap a photo of things around your home. Our friendly genie will 
+            suggest fun projects you can build together as a family! 🌱✨
           </p>
 
-          <div className="mt-8 flex flex-wrap items-center gap-4">
-            <button className="group relative bg-rust text-paper font-block uppercase text-base px-7 py-4 brut hover:bg-bubble transition-colors flex items-center gap-3">
+          <div className="flex flex-wrap items-center gap-4">
+            <button className="group bg-eco-forest text-paper font-block uppercase text-base px-8 py-4 rounded-xl shadow-brut hover:bg-eco-leaf transition-colors flex items-center gap-3">
               <Wand2 className="w-5 h-5" />
-              Make something! 🪄
+              Start Creating!
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition" />
             </button>
-            <button className="bg-paper border-2 border-ink font-block uppercase text-base px-6 py-4 brut-sm hover:bg-sky transition-colors">
-              Peek the magic ↓
+            <button className="bg-paper border-2 border-eco-forest text-ink font-block uppercase text-base px-6 py-4 rounded-xl shadow-brut-sm hover:bg-eco-sage/30 transition-colors">
+              See How It Works
             </button>
-            <div className="font-hand text-2xl text-grape rotate-[-3deg] hidden sm:block">free · no signup · all ages</div>
           </div>
 
-          {/* tag pills */}
-          <div className="mt-10 flex flex-wrap gap-2 font-mono text-[11px] uppercase tracking-wider">
+          {/* Simple tag pills */}
+          <div className="mt-8 flex flex-wrap gap-2 font-mono text-xs uppercase tracking-wider">
             {[
-              { t: "📸 snap a pic", c: "bg-caution" },
-              { t: "🧠 friendly AI", c: "bg-sky text-ink" },
-              { t: "🎨 craft ideas", c: "bg-bubble text-ink" },
-              { t: "👨‍👩‍👧 family fun", c: "bg-grass text-ink" },
+              { t: "📸 Easy Photos", c: "bg-eco-sage text-ink" },
+              { t: "🧠 AI Magic", c: "bg-sky text-ink" },
+              { t: "🎨 Fun Crafts", c: "bg-bubble text-ink" },
+              { t: "👨‍👩‍👧‍👦 Family Time", c: "bg-grass text-ink" },
             ].map((p,i) => (
-              <span key={i} className={`${p.c} border-2 border-ink px-3 py-1.5 brut-sm`}>{p.t}</span>
+              <span key={i} className={`${p.c} px-3 py-1.5 rounded-full border border-ink/10`}>{p.t}</span>
             ))}
           </div>
         </div>
 
-        {/* RIGHT — collaged junk pile */}
-        <div className="lg:col-span-5 relative min-h-[520px] flex items-center justify-center">
-          {/* big yellow burst behind */}
-          <div className="absolute inset-0 grid place-items-center">
-            <div className="w-[420px] h-[420px] bg-bubble border-2 border-ink rounded-full r-l2 animate-spin-slow opacity-90"
-                 style={{ clipPath: 'polygon(50% 0%, 60% 35%, 98% 35%, 68% 57%, 80% 91%, 50% 70%, 20% 91%, 32% 57%, 2% 35%, 40% 35%)' }} />
+        {/* RIGHT — cleaner image area */}
+        <div className="relative flex items-center justify-center">
+          {/* Soft green blob behind */}
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="w-[380px] h-[380px] bg-gradient-to-br from-eco-leaf/30 to-eco-sage/50 rounded-full blur-3xl" />
           </div>
-          {/* teal panel */}
-          <div className="absolute right-0 top-12 w-64 h-72 bg-sky border-2 border-ink r-r2 brut" />
-          {/* the junk image */}
-          <img
-            src={junkPile}
-            alt="A pile of household junk magically glowing"
-            width={1024} height={1024}
-            className="relative z-10 w-[110%] max-w-none drop-shadow-[8px_8px_0_hsl(var(--ink))] animate-float-up"
-          />
-          {/* sparkles */}
-          <Sparkles className="absolute top-8 left-10 w-10 h-10 text-rust animate-flicker z-20" />
-          <Sparkles className="absolute bottom-12 right-8 w-7 h-7 text-grape animate-flicker z-20" style={{animationDelay: '1s'}}/>
-          <Star className="absolute top-1/3 right-2 w-8 h-8 text-caution fill-caution animate-wiggle z-20" />
-          {/* sticky note */}
-          <div className="absolute -bottom-4 -left-2 z-20 bg-grass border-2 border-ink p-3 r-l3 brut-sm w-44">
-            <div className="font-hand text-lg leading-tight text-ink">
-              "we made a robot out of a cereal box!" — the patel kids 🤖
+          
+          {/* Main image with soft shadow */}
+          <div className="relative z-10">
+            <img
+              src={junkPile}
+              alt="A pile of household items ready to become toys"
+              width={500} height={500}
+              className="w-full max-w-[420px] drop-shadow-2xl animate-float-up"
+            />
+            
+            {/* Sparkle decorations */}
+            <Sparkles className="absolute -top-4 -right-4 w-8 h-8 text-caution animate-flicker" />
+            <Heart className="absolute -bottom-2 -left-4 w-6 h-6 text-rust fill-rust animate-bounce-soft" />
+            <Star className="absolute top-1/4 -right-6 w-5 h-5 text-eco-leaf fill-eco-leaf animate-wiggle" />
+          </div>
+          
+          {/* Simple testimonial card */}
+          <div className="absolute -bottom-6 -left-6 z-20 bg-paper border-2 border-eco-forest rounded-2xl p-4 shadow-brut max-w-[200px]">
+            <div className="font-hand text-lg text-ink leading-tight">
+              "We made a robot from cereal boxes!"
             </div>
-          </div>
-          {/* arrow */}
-          <div className="absolute top-1/2 -left-4 hidden lg:block z-20 font-hand text-xl text-rust rotate-[-12deg]">
-            yep, that pile ↗
+            <div className="mt-2 font-mono text-xs text-ink-soft">
+              — The Patel Family 🤖
+            </div>
           </div>
         </div>
       </div>
