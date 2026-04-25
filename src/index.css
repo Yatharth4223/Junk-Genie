@@ -1,105 +1,184 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Bungee&family=Caveat:wght@400;700&family=DM+Serif+Display:ital@0;1&family=Permanent+Marker&family=Special+Elite&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* === JUNKGENIE: Trash Couture Zine Theme === */
+    --paper:           42 38% 92%;     /* off-white newsprint */
+    --paper-dark:      36 28% 84%;     /* aged paper */
+    --kraft:           32 45% 62%;     /* cardboard brown */
+    --ink:             20 14% 10%;     /* deep ink black */
+    --ink-soft:        24 10% 22%;
+    --caution:         48 96% 54%;     /* caution-tape yellow */
+    --rust:            16 78% 48%;     /* rust orange */
+    --teal:            175 42% 26%;    /* oxidized teal */
+    --red-stamp:       2  78% 48%;     /* red ink stamp */
+    --tape:            45 88% 72% / 0.85;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    /* shadcn aliases */
+    --background: var(--paper);
+    --foreground: var(--ink);
+    --card: var(--paper);
+    --card-foreground: var(--ink);
+    --popover: var(--paper);
+    --popover-foreground: var(--ink);
+    --primary: var(--ink);
+    --primary-foreground: var(--paper);
+    --secondary: var(--kraft);
+    --secondary-foreground: var(--ink);
+    --muted: var(--paper-dark);
+    --muted-foreground: var(--ink-soft);
+    --accent: var(--caution);
+    --accent-foreground: var(--ink);
+    --destructive: var(--red-stamp);
+    --destructive-foreground: var(--paper);
+    --border: var(--ink);
+    --input: var(--ink);
+    --ring: var(--rust);
+    --radius: 0.25rem;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    /* Fonts */
+    --font-display: 'DM Serif Display', serif;
+    --font-block: 'Archivo Black', sans-serif;
+    --font-bungee: 'Bungee', sans-serif;
+    --font-mono: 'Special Elite', 'JetBrains Mono', monospace;
+    --font-marker: 'Permanent Marker', cursive;
+    --font-hand: 'Caveat', cursive;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
-
-    --radius: 0.5rem;
-
-    --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
-  }
-
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    /* Shadows — chunky brutalist */
+    --shadow-brut-sm: 3px 3px 0 0 hsl(var(--ink));
+    --shadow-brut: 6px 6px 0 0 hsl(var(--ink));
+    --shadow-brut-lg: 10px 10px 0 0 hsl(var(--ink));
+    --shadow-brut-rust: 6px 6px 0 0 hsl(var(--rust));
+    --shadow-brut-teal: 6px 6px 0 0 hsl(var(--teal));
   }
 }
 
 @layer base {
-  * {
-    @apply border-border;
-  }
-
+  * { @apply border-border; }
+  html { background: hsl(var(--paper)); }
   body {
     @apply bg-background text-foreground;
+    font-family: var(--font-mono);
+    background-image:
+      radial-gradient(hsl(var(--ink) / 0.06) 1px, transparent 1px),
+      radial-gradient(hsl(var(--ink) / 0.04) 1px, transparent 1px);
+    background-size: 24px 24px, 12px 12px;
+    background-position: 0 0, 6px 6px;
   }
+  ::selection { background: hsl(var(--caution)); color: hsl(var(--ink)); }
+}
+
+@layer components {
+  /* === Paper / texture surfaces === */
+  .paper {
+    background: hsl(var(--paper));
+    background-image:
+      radial-gradient(hsl(var(--ink) / 0.05) 1px, transparent 1px);
+    background-size: 14px 14px;
+  }
+  .kraft {
+    background: hsl(var(--kraft));
+    background-image:
+      repeating-linear-gradient(45deg, hsl(var(--ink)/0.04) 0 2px, transparent 2px 8px);
+  }
+  .ink-bg { background: hsl(var(--ink)); color: hsl(var(--paper)); }
+
+  /* Halftone overlay */
+  .halftone::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: radial-gradient(hsl(var(--ink) / 0.35) 1px, transparent 1.5px);
+    background-size: 6px 6px;
+    mix-blend-mode: multiply;
+    pointer-events: none;
+    opacity: 0.4;
+  }
+
+  /* === Brutalist card === */
+  .brut {
+    @apply border-2 border-foreground bg-card;
+    box-shadow: var(--shadow-brut);
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+  .brut:hover { transform: translate(-2px, -2px); box-shadow: 10px 10px 0 0 hsl(var(--ink)); }
+  .brut-sm { @apply border-2 border-foreground; box-shadow: var(--shadow-brut-sm); }
+  .brut-lg { @apply border-[3px] border-foreground; box-shadow: var(--shadow-brut-lg); }
+
+  /* === Tape strip === */
+  .tape {
+    position: absolute;
+    width: 110px; height: 28px;
+    background: hsl(var(--tape));
+    border-left: 1px dashed hsl(var(--ink) / 0.25);
+    border-right: 1px dashed hsl(var(--ink) / 0.25);
+    box-shadow: 0 2px 4px hsl(var(--ink) / 0.15);
+    z-index: 5;
+  }
+
+  /* === Stamp === */
+  .stamp {
+    @apply inline-block uppercase;
+    font-family: var(--font-block);
+    color: hsl(var(--red-stamp));
+    border: 4px double hsl(var(--red-stamp));
+    padding: 0.4rem 1rem;
+    transform: rotate(-6deg);
+    letter-spacing: 0.1em;
+    opacity: 0.92;
+  }
+
+  /* === Marquee === */
+  .marquee { display: flex; overflow: hidden; gap: 2rem; }
+  .marquee-track {
+    display: flex; gap: 2rem; flex-shrink: 0;
+    animation: marquee 35s linear infinite;
+  }
+
+  /* === Hand-drawn underline === */
+  .scribble {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 12'><path d='M2 8 Q 50 2, 100 7 T 198 6' stroke='%23E63B1F' stroke-width='4' fill='none' stroke-linecap='round'/></svg>");
+    background-repeat: no-repeat;
+    background-position: bottom left;
+    background-size: 100% 0.45em;
+    padding-bottom: 0.15em;
+  }
+
+  /* === Wobble === */
+  .wobble:hover { animation: wobble 0.5s ease-in-out; }
+
+  /* Rotations for collage */
+  .r-l1 { transform: rotate(-1.5deg); }
+  .r-l2 { transform: rotate(-3deg); }
+  .r-l3 { transform: rotate(-6deg); }
+  .r-r1 { transform: rotate(1.5deg); }
+  .r-r2 { transform: rotate(3deg); }
+  .r-r3 { transform: rotate(6deg); }
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@keyframes wobble {
+  0%,100% { transform: rotate(0); }
+  25% { transform: rotate(-3deg); }
+  75% { transform: rotate(3deg); }
+}
+@keyframes float-up {
+  0%,100% { transform: translateY(0); }
+  50%     { transform: translateY(-12px); }
+}
+@keyframes spin-slow {
+  to { transform: rotate(360deg); }
+}
+@keyframes flicker {
+  0%,100% { opacity: 1; }
+  45% { opacity: 1; }
+  50% { opacity: 0.4; }
+  55% { opacity: 1; }
 }

@@ -1,0 +1,31 @@
+import { Recycle, Camera } from "lucide-react";
+
+export const JunkNav = () => (
+  <header className="relative z-30 border-b-2 border-ink bg-paper">
+    <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+      <a href="#" className="flex items-center gap-3 group">
+        <div className="grid place-items-center w-11 h-11 bg-rust text-paper border-2 border-ink brut-sm group-hover:rotate-12 transition-transform">
+          <Recycle className="w-6 h-6" strokeWidth={2.5} />
+        </div>
+        <div className="leading-none">
+          <div className="font-block text-2xl tracking-tight">JUNK<span className="text-rust">GENIE</span></div>
+          <div className="font-mono text-[10px] uppercase tracking-[0.25em] text-ink-soft">est. now · zero waste</div>
+        </div>
+      </a>
+      <nav className="hidden md:flex items-center gap-1 font-mono text-xs uppercase tracking-widest">
+        <a href="#process" className="px-3 py-2 hover:bg-caution border-2 border-transparent hover:border-ink">Process</a>
+        <a href="#gallery" className="px-3 py-2 hover:bg-caution border-2 border-transparent hover:border-ink">Gallery</a>
+        <a href="#manifesto" className="px-3 py-2 hover:bg-caution border-2 border-transparent hover:border-ink">Manifesto</a>
+      </nav>
+      <button className="flex items-center gap-2 bg-ink text-paper px-4 py-2.5 font-block text-sm uppercase brut-sm hover:bg-rust transition-colors">
+        <Camera className="w-4 h-4" /> Scan now
+      </button>
+    </div>
+    {/* caution tape */}
+    <div className="h-3 bg-caution relative overflow-hidden border-t border-ink">
+      <div className="absolute inset-0" style={{
+        backgroundImage: 'repeating-linear-gradient(45deg, hsl(var(--ink)) 0 12px, transparent 12px 28px)'
+      }} />
+    </div>
+  </header>
+);
