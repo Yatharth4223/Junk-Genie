@@ -1,11 +1,12 @@
 import { useRef, useState } from "react";
 import { Camera, Upload, Image as ImageIcon, X, ArrowLeft, Sparkles } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { JunkNav } from "@/components/JunkNav";
 import { JunkFooter } from "@/components/JunkFooter";
 
 const Create = () => {
-  const [mode, setMode] = useState<"none" | "scan" | "upload">("none");
+  const navigate = useNavigate();
+  const [mode, setMode] = useState<"none" | "upload">("none");
   const [preview, setPreview] = useState<string | null>(null);
   const [fileName, setFileName] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -54,10 +55,8 @@ const Create = () => {
           {/* SCAN */}
           <button
             type="button"
-            onClick={() => setMode("scan")}
-            className={`group text-left bg-paper border-2 border-ink rounded-2xl p-8 shadow-brut-sm hover:-translate-y-1 hover:shadow-brut transition-all ${
-              mode === "scan" ? "ring-4 ring-grape/40 -translate-y-1" : ""
-            }`}
+            onClick={() => navigate("/create/scan")}
+            className="group text-left bg-paper border-2 border-ink rounded-2xl p-8 shadow-brut-sm hover:-translate-y-1 hover:shadow-brut transition-all"
           >
             <div className="w-16 h-16 rounded-2xl bg-eco-leaf/30 border-2 border-eco-forest flex items-center justify-center mb-5 group-hover:rotate-6 transition-transform">
               <Camera className="w-8 h-8 text-eco-forest" strokeWidth={2.5} />
@@ -105,18 +104,6 @@ const Create = () => {
         />
 
         {/* Result panels */}
-        {mode === "scan" && (
-          <div className="mt-10 bg-eco-sage/30 border-2 border-eco-forest rounded-2xl p-8 text-center shadow-brut-sm">
-            <div className="inline-flex w-14 h-14 rounded-full bg-paper border-2 border-eco-forest items-center justify-center mb-4 animate-bounce-soft">
-              <Camera className="w-6 h-6 text-eco-forest" />
-            </div>
-            <h3 className="font-block text-xl uppercase mb-2">Camera mode is warming up ✨</h3>
-            <p className="font-mono text-sm text-ink-soft max-w-md mx-auto">
-              Live scanning is coming next. For now, try the upload option to see the genie at work.
-            </p>
-          </div>
-        )}
-
         {mode === "upload" && preview && (
           <div className="mt-10 bg-paper border-2 border-ink rounded-2xl p-6 shadow-brut-sm">
             <div className="flex items-center justify-between mb-4">
