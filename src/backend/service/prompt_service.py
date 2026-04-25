@@ -11,14 +11,16 @@ def get_manual_prompt(project: ProjectDTO) -> list:
         for key, desc in project.item_visual_descriptions.items()
     )
 
-    panels = "\n".join(
-        f"Panel {step.step_number} of {len(project.steps)}: {step.action_description_for_imagen}"
+    panels = "\n\n---\n\n".join(
+        f"GRID PANEL {step.step_number}: {step.action_description_for_imagen}"
         for step in project.steps
     )
 
     prompt_text = (
-        f"Flat vector illustration. White background. Bold black outlines. No text.\n\n"
-        f"Objects:\n{objects}\n\n"
+        f"A single image split evenly into a {len(project.steps)}-panel grid layout. "
+        f"Instructional manual style. Flat vector illustration. Plain white background. Bold black outlines. No text or numbers.\n\n"
+        f"GLOBAL ASSETS (Use these consistent designs across all panels):\n{objects}\n\n"
+        f"PANEL BY PANEL DESCRIPTIONS:\n\n"
         f"{panels}"
     )
 

@@ -23,7 +23,7 @@ async def run_pipeline(items: str, project_index: int = 0) -> None:
 
     print("\nPipeline 3: Generating manual image")
     image_bytes = await loop.run_in_executor(None, generate_image, contents)
-    path = save_image(image_bytes, "assets/manual.png")
+    path = save_image(image_bytes, "manual.png")
     print(f"  Saved: {path}")
 
     print("\nInstructions")

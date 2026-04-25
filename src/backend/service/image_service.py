@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
-OUTPUT_DIR = Path("output")
+OUTPUT_DIR = Path("resources")
 
 
 def generate_image(contents: list) -> bytes:
