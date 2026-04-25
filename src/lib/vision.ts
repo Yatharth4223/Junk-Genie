@@ -6,6 +6,8 @@ export type VisionResult = {
   top: string | null;
   labels: { description: string; score: number }[];
   objects: { name: string; score: number }[];
+  web?: any;
+  imageProperties?: any;
   suggestions: Suggestion[];
 };
 
