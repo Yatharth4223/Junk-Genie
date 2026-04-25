@@ -26,7 +26,7 @@ const Create = () => {
   };
 
   return (
-    <main className="min-h-screen bg-paper text-foreground flex flex-col">
+    <main className="min-h-screen text-foreground flex flex-col">
       <JunkNav />
 
       <section className="flex-1 mx-auto w-full max-w-6xl px-6 py-12 md:py-20">
