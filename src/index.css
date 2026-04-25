@@ -7,16 +7,24 @@
 
 @layer base {
   :root {
-    /* === JUNKGENIE: Trash Couture Zine Theme === */
-    --paper:           42 38% 92%;     /* off-white newsprint */
-    --paper-dark:      36 28% 84%;     /* aged paper */
-    --kraft:           32 45% 62%;     /* cardboard brown */
-    --ink:             20 14% 10%;     /* deep ink black */
-    --ink-soft:        24 10% 22%;
-    --caution:         48 96% 54%;     /* caution-tape yellow */
-    --rust:            16 78% 48%;     /* rust orange */
-    --teal:            175 42% 26%;    /* oxidized teal */
-    --red-stamp:       2  78% 48%;     /* red ink stamp */
+    /* === JUNKGENIE: Eco-Friendly Playground Theme === */
+    --paper:           100 30% 96%;     /* soft eco white */
+    --paper-dark:      95 25% 90%;     /* natural cream */
+    --kraft:           80 35% 75%;     /* recycled cardboard */
+    --ink:             120 20% 18%;    /* forest ink */
+    --ink-soft:        120 15% 35%;
+    
+    /* Eco greens - primary palette */
+    --eco-leaf:        145 55% 45%;    /* fresh leaf green */
+    --eco-forest:      140 45% 35%;    /* deep forest */
+    --eco-moss:        100 30% 55%;    /* mossy green */
+    --eco-sage:        120 25% 70%;    /* soft sage */
+    
+    /* Fun accent colors */
+    --caution:         48 96% 54%;     /* sunny yellow */
+    --rust:            25 75% 52%;     /* terracotta */
+    --teal:            175 42% 35%;    /* ocean teal */
+    --red-stamp:       2  78% 48%;     /* berry red */
     --tape:            45 88% 72% / 0.85;
 
     /* fun pops */
@@ -32,20 +40,20 @@
     --card-foreground: var(--ink);
     --popover: var(--paper);
     --popover-foreground: var(--ink);
-    --primary: var(--ink);
+    --primary: var(--eco-forest);
     --primary-foreground: var(--paper);
-    --secondary: var(--kraft);
+    --secondary: var(--eco-sage);
     --secondary-foreground: var(--ink);
     --muted: var(--paper-dark);
     --muted-foreground: var(--ink-soft);
-    --accent: var(--caution);
-    --accent-foreground: var(--ink);
+    --accent: var(--eco-leaf);
+    --accent-foreground: var(--paper);
     --destructive: var(--red-stamp);
     --destructive-foreground: var(--paper);
-    --border: var(--ink);
-    --input: var(--ink);
-    --ring: var(--rust);
-    --radius: 0.25rem;
+    --border: var(--eco-forest);
+    --input: var(--eco-forest);
+    --ring: var(--eco-leaf);
+    --radius: 0.75rem;
 
     /* Fonts */
     --font-display: 'DM Serif Display', serif;
@@ -55,12 +63,12 @@
     --font-marker: 'Permanent Marker', cursive;
     --font-hand: 'Caveat', cursive;
 
-    /* Shadows — chunky brutalist */
-    --shadow-brut-sm: 3px 3px 0 0 hsl(var(--ink));
-    --shadow-brut: 6px 6px 0 0 hsl(var(--ink));
-    --shadow-brut-lg: 10px 10px 0 0 hsl(var(--ink));
-    --shadow-brut-rust: 6px 6px 0 0 hsl(var(--rust));
-    --shadow-brut-teal: 6px 6px 0 0 hsl(var(--teal));
+    /* Shadows — soft playful */
+    --shadow-brut-sm: 2px 2px 0 0 hsl(var(--eco-forest));
+    --shadow-brut: 4px 4px 0 0 hsl(var(--eco-forest));
+    --shadow-brut-lg: 6px 6px 0 0 hsl(var(--eco-forest));
+    --shadow-brut-rust: 4px 4px 0 0 hsl(var(--rust));
+    --shadow-brut-teal: 4px 4px 0 0 hsl(var(--teal));
   }
 }
 
@@ -70,13 +78,10 @@
   body {
     @apply bg-background text-foreground;
     font-family: var(--font-mono);
-    background-image:
-      radial-gradient(hsl(var(--ink) / 0.06) 1px, transparent 1px),
-      radial-gradient(hsl(var(--ink) / 0.04) 1px, transparent 1px);
-    background-size: 24px 24px, 12px 12px;
-    background-position: 0 0, 6px 6px;
+    background: linear-gradient(180deg, hsl(var(--eco-sage) / 0.3) 0%, hsl(var(--paper)) 40%, hsl(var(--paper)) 100%);
+    background-attachment: fixed;
   }
-  ::selection { background: hsl(var(--caution)); color: hsl(var(--ink)); }
+  ::selection { background: hsl(var(--eco-leaf)); color: hsl(var(--paper)); }
 }
 
 @layer components {
