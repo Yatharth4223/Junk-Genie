@@ -1,18 +1,18 @@
 import { Camera, Brain, Hammer } from "lucide-react";
 
 const steps = [
-  { n: "01", icon: Camera, title: "Snap the mess", note: "yes, that mess", body: "Point your phone at the pile. The crusty toaster, the bent fork, the mystery cable from 2009 — all of it. The grosser the better 🤌", color: "bg-caution", rot: "r-l2" },
-  { n: "02", icon: Brain, title: "Genie squints", note: "thinking noises 🤔", body: "A tiny AI brain looks at your junk and goes 'ohhh i KNOW what this could be'. Then makes a list of suspiciously cool ideas.", color: "bg-paper", rot: "r-r1" },
-  { n: "03", icon: Hammer, title: "Make a thing", note: "send pics pls 📸", body: "Pick an idea, follow the steps, build something gloriously dumb. Show it off. Confuse your roommates. Win at life.", color: "bg-rust text-paper", rot: "r-l1" },
+  { n: "01", icon: Camera, title: "Snap a photo 📸", note: "easy peasy!", body: "Point your phone at a pile of stuff at home — old jars, cardboard, lonely socks, anything! The genie loves it all.", color: "bg-sky", rot: "r-l2" },
+  { n: "02", icon: Brain, title: "Genie thinks 🧞", note: "ooooh ideas!", body: "Our friendly AI peeks at your stuff and dreams up tons of cool things to make — picked just for what you already have.", color: "bg-bubble", rot: "r-r1" },
+  { n: "03", icon: Hammer, title: "Build together 🛠️", note: "high fives!", body: "Pick a project you love, follow the picture-by-picture steps, and build something awesome with the family. Easy wins!", color: "bg-grass text-ink", rot: "r-l1" },
 ];
 
 export const ProcessSteps = () => (
   <section id="process" className="relative kraft border-y-2 border-ink py-24">
     <div className="mx-auto max-w-7xl px-6">
       <div className="flex flex-col items-center mb-16">
-        <span className="font-mono uppercase text-xs tracking-[0.4em] bg-ink text-paper px-3 py-1 mb-4">// how the magic happens</span>
+        <span className="font-mono uppercase text-xs tracking-[0.4em] bg-ink text-paper px-3 py-1 mb-4">★ how the magic happens ★</span>
         <h2 className="font-display text-5xl md:text-7xl text-center leading-none">
-          Three clicks. <span className="font-marker text-rust">One</span> goblin idea. 🧞
+          Three steps. <span className="font-marker text-rust">One</span> happy genie. 🧞✨
         </h2>
       </div>
 

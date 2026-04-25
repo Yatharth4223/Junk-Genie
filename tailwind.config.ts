@@ -56,6 +56,10 @@ export default {
         rust: "hsl(var(--rust))",
         teal: "hsl(var(--teal))",
         "red-stamp": "hsl(var(--red-stamp))",
+        bubble: "hsl(var(--bubble-pink))",
+        sky: "hsl(var(--sky-blue))",
+        grass: "hsl(var(--grass))",
+        grape: "hsl(var(--grape))",
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
@@ -112,6 +116,14 @@ export default {
           "50%": { opacity: "0.4" },
           "55%": { opacity: "1" },
         },
+        "wiggle": {
+          "0%,100%": { transform: "rotate(-3deg)" },
+          "50%":     { transform: "rotate(3deg)" },
+        },
+        "bounce-soft": {
+          "0%,100%": { transform: "translateY(0)" },
+          "50%":     { transform: "translateY(-8px)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -120,6 +132,8 @@ export default {
         "float-up": "float-up 4s ease-in-out infinite",
         "spin-slow": "spin-slow 18s linear infinite",
         "flicker": "flicker 3s infinite",
+        "wiggle": "wiggle 1.4s ease-in-out infinite",
+        "bounce-soft": "bounce-soft 2.4s ease-in-out infinite",
       },
     },
   },

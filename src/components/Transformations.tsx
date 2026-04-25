@@ -6,8 +6,8 @@ import afterShelf from "@/assets/after-shelf.png";
 import lamp from "@/assets/upcycled-lamp.png";
 
 const items = [
-  { before: beforeCans, after: afterPlanter, title: "sad rusty cans", to: "lil plant gang 🪴", time: "1.5 hr", diff: "easy peasy" },
-  { before: beforePallet, after: afterShelf, title: "yeeted pallet", to: "floaty book shelf 📚", time: "3 hr", diff: "mildly sweaty" },
+  { before: beforeCans, after: afterPlanter, title: "old soup cans", to: "happy plant pals 🪴", time: "1.5 hr", diff: "kid friendly" },
+  { before: beforePallet, after: afterShelf, title: "wonky old pallet", to: "cool book shelf 📚", time: "3 hr", diff: "with a grown-up" },
 ];
 
 export const Transformations = () => {
@@ -19,14 +19,14 @@ export const Transformations = () => {
       <div className="mx-auto max-w-7xl px-6">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14">
           <div>
-            <span className="font-mono uppercase text-xs tracking-[0.4em] text-rust">// receipts 🧾</span>
+            <span className="font-mono uppercase text-xs tracking-[0.4em] text-rust">★ before & after ★</span>
             <h2 className="mt-2 font-display text-5xl md:text-7xl leading-none">
-              Yikes. <span className="italic">Yes!</span><br/>
-              <span className="font-marker text-teal text-[0.7em]">poke a card 👇</span>
+              Boring. <span className="italic">Brilliant!</span><br/>
+              <span className="font-marker text-grape text-[0.7em]">tap a card 👇</span>
             </h2>
           </div>
           <p className="font-mono text-sm max-w-sm border-l-4 border-ink pl-4">
-            Tap a card to watch garbage glow up. No filters, no lies, just before-and-after vibes ✨
+            Tap a card and watch ordinary stuff become something amazing. Real projects from real families ✨
           </p>
         </div>
 
@@ -54,7 +54,7 @@ export const Transformations = () => {
                     {showAfter[i] ? 'AFTER' : 'BEFORE'}
                   </div>
                   <div className="absolute bottom-3 right-3 bg-ink text-paper font-mono text-[10px] uppercase px-2 py-1 tracking-widest">
-                    poke me ↻
+                    tap me ↻
                   </div>
                 </div>
                 <div className="flex items-end justify-between mt-4">
@@ -86,7 +86,7 @@ export const Transformations = () => {
           </div>
           <div className="md:col-span-2">
             <div className="font-display text-4xl md:text-5xl leading-tight">
-              <span className="font-marker text-rust">47,283</span> goofy little projects built last month by people who said "wait... what if i glued this to that?" 🧤🪛
+              <span className="font-marker text-rust">47,283</span> happy little projects built last month by families who said <span className="font-hand text-grape">"hey, what if we made THIS?"</span> 🎨🛠️
             </div>
           </div>
         </div>
