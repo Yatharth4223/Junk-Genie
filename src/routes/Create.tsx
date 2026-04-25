@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { Camera, Upload, Image as ImageIcon, X, ArrowLeft, Sparkles, Loader2, Download, AlertCircle } from "lucide-react";
+import { Camera, Upload, Image as ImageIcon, X, ArrowLeft, Sparkles, Loader2, AlertCircle } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { JunkNav } from "@/components/JunkNav";
 import { JunkFooter } from "@/components/JunkFooter";
@@ -21,23 +21,24 @@ function safeName(name: string) {
   return name.replace(/\.[^.]+$/, "").replace(/[^a-z0-9-_]+/gi, "_").toLowerCase();
 }
 
-function downloadJSON(filename: string, payload: unknown) {
-  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = filename;
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  setTimeout(() => URL.revokeObjectURL(url), 0);
-}
-
 const Create = () => {
   const navigate = useNavigate();
   const [mode, setMode] = useState<"none" | "upload">("none");
   const [items, setItems] = useState<ImageItem[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const saveJsonToResources = async (filename: string, payload: unknown) => {
+    const res = await fetch("/api/save-json", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ filename, payload }),
+    });
+    if (!res.ok) {
+      const text = await res.text().catch(() => "");
+      throw new Error(text || `Failed to save JSON (${res.status})`);
+    }
+    return (await res.json()) as { ok: true; file: string };
+  };
 
   const readAsDataURL = (file: File) =>
     new Promise<string>((resolve, reject) => {
@@ -57,7 +58,7 @@ const Create = () => {
       setItems((prev) =>
         prev.map((i) => (i.id === item.id ? { ...i, status: "done", result } : i)),
       );
-      // Auto-download per-image JSON
+
       const payload = {
         image: {
           name: item.file.name,
@@ -69,7 +70,7 @@ const Create = () => {
         vision: result,
       };
       const stamp = new Date().toISOString().replace(/[:.]/g, "-");
-      downloadJSON(`${safeName(item.file.name)}_${stamp}.json`, payload);
+      await saveJsonToResources(`${safeName(item.file.name)}_${stamp}.json`, payload);
     } catch (err: any) {
       setItems((prev) =>
         prev.map((i) =>
@@ -117,22 +118,6 @@ const Create = () => {
   const clearAll = () => {
     setItems([]);
     if (fileInputRef.current) fileInputRef.current.value = "";
-  };
-
-  const redownload = (item: ImageItem) => {
-    if (!item.result) return;
-    const payload = {
-      image: {
-        name: item.file.name,
-        size: item.file.size,
-        type: item.file.type,
-        lastModified: item.file.lastModified,
-        analyzedAt: new Date().toISOString(),
-      },
-      vision: item.result,
-    };
-    const stamp = new Date().toISOString().replace(/[:.]/g, "-");
-    downloadJSON(`${safeName(item.file.name)}_${stamp}.json`, payload);
   };
 
   return (
@@ -289,26 +274,18 @@ const Create = () => {
                     )}
 
                     {item.status === "done" && item.result && (
-                      <>
-                        <div className="flex flex-wrap gap-1.5">
-                          {top2.map((t, idx) => (
-                            <span
-                              key={`${t.label}-${idx}`}
-                              className="inline-flex items-center gap-1 bg-eco-sage/40 border border-eco-forest rounded-full px-2 py-0.5 font-mono text-[10px]"
-                              title={`${Math.round(t.score * 100)}% confidence`}
-                            >
-                              {t.label}
-                              <span className="text-ink-soft">{Math.round(t.score * 100)}%</span>
-                            </span>
-                          ))}
-                        </div>
-                        <button
-                          onClick={() => redownload(item)}
-                          className="mt-auto inline-flex items-center justify-center gap-1.5 px-2.5 py-1 font-mono text-[10px] uppercase tracking-widest border-2 border-ink rounded-lg bg-paper hover:bg-eco-sage/40 transition-colors"
-                        >
-                          <Download className="w-3 h-3" /> json
-                        </button>
-                      </>
+                      <div className="flex flex-wrap gap-1.5">
+                        {top2.map((t, idx) => (
+                          <span
+                            key={`${t.label}-${idx}`}
+                            className="inline-flex items-center gap-1 bg-eco-sage/40 border border-eco-forest rounded-full px-2 py-0.5 font-mono text-[10px]"
+                            title={`${Math.round(t.score * 100)}% confidence`}
+                          >
+                            {t.label}
+                            <span className="text-ink-soft">{Math.round(t.score * 100)}%</span>
+                          </span>
+                        ))}
+                      </div>
                     )}
                   </div>
                 </div>
