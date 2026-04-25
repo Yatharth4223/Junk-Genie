@@ -60,6 +60,15 @@ export default {
         sky: "hsl(var(--sky-blue))",
         grass: "hsl(var(--grass))",
         grape: "hsl(var(--grape))",
+        "eco-leaf": "hsl(var(--eco-leaf))",
+        "eco-forest": "hsl(var(--eco-forest))",
+        "eco-moss": "hsl(var(--eco-moss))",
+        "eco-sage": "hsl(var(--eco-sage))",
+        /* Eco greens */
+        "eco-leaf": "hsl(var(--eco-leaf))",
+        "eco-forest": "hsl(var(--eco-forest))",
+        "eco-moss": "hsl(var(--eco-moss))",
+        "eco-sage": "hsl(var(--eco-sage))",
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
