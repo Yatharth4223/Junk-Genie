@@ -1,4 +1,5 @@
 import { Camera } from "lucide-react";
+import { Link } from "react-router-dom";
 import genieLogo from "@/assets/genie-logo.png";
 
 export const JunkNav = () => (
@@ -24,9 +25,12 @@ export const JunkNav = () => (
         <a href="#gallery" className="px-3 py-2 rounded-full hover:bg-eco-sage/40 transition-colors">Glow-ups</a>
         <a href="#manifesto" className="px-3 py-2 rounded-full hover:bg-eco-sage/40 transition-colors">House rules</a>
       </nav>
-      <button className="flex items-center gap-2 bg-grape text-paper px-5 py-2.5 font-block text-sm uppercase rounded-xl shadow-brut-sm hover:bg-eco-forest transition-colors">
+      <Link
+        to="/create"
+        className="flex items-center gap-2 bg-grape text-paper px-5 py-2.5 font-block text-sm uppercase rounded-xl shadow-brut-sm hover:bg-eco-forest transition-colors"
+      >
         <Camera className="w-4 h-4" /> Rub the lamp 🪄
-      </button>
+      </Link>
     </div>
   </header>
 );
