@@ -1,0 +1,38 @@
+{
+  "image": {
+    "name": "imageNew.jpeg",
+    "size": 404547,
+    "type": "image/jpeg",
+    "lastModified": 1777150006786,
+    "analyzedAt": "2026-04-26T05:14:31.945Z"
+  },
+  "vision": {
+    "top": "Lighting",
+    "labels": [
+      {
+        "description": "Audio equipment",
+        "score": 0.9626511931419373
+      },
+      {
+        "description": "Headphones",
+        "score": 0.7426999807357788
+      },
+      {
+        "description": "Gadget",
+        "score": 0.6756753325462341
+      }
+    ],
+    "objects": [
+      {
+        "name": "Lighting",
+        "score": 0.506270706653595
+      }
+    ],
+    "objectNames": [
+      "Lighting"
+    ],
+    "web": null,
+    "imageProperties": null,
+    "suggestions": []
+  }
+}

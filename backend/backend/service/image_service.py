@@ -6,8 +6,8 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-
-OUTPUT_DIR = Path("resources")
+# Always save to the repo-level `resources/` folder (not relative to cwd).
+OUTPUT_DIR = Path(__file__).resolve().parents[3] / "resources"
 
 
 def generate_image(contents: list) -> bytes:

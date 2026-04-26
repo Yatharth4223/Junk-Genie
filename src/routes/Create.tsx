@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { Camera, Upload, Image as ImageIcon, X, ArrowLeft, Sparkles, Loader2, AlertCircle } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { JunkNav } from "@/components/JunkNav";
@@ -6,6 +6,7 @@ import { JunkFooter } from "@/components/JunkFooter";
 import { ProcessSteps } from "@/components/ProcessSteps";
 import { detectFromBase64, topTwoByConfidence, type VisionResult } from "@/lib/vision";
 import { toast } from "sonner";
+import { MagicBubbles } from "@/components/MagicBubbles";
 
 const MAX_IMAGES = 5;
 
@@ -18,6 +19,14 @@ type ImageItem = {
   error?: string;
 };
 
+type Blueprint = {
+  title: string;
+  difficulty: "easy" | "medium" | "hard";
+  description: string;
+  steps: string[];
+  stepsImageBase64?: string;
+};
+
 function safeName(name: string) {
   return name.replace(/\.[^.]+$/, "").replace(/[^a-z0-9-_]+/gi, "_").toLowerCase();
 }
@@ -27,6 +36,56 @@ const Create = () => {
   const [mode, setMode] = useState<"none" | "upload">("none");
   const [items, setItems] = useState<ImageItem[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [magicOpen, setMagicOpen] = useState(false);
+  const [makingMagic, setMakingMagic] = useState(false);
+  const [blueprints, setBlueprints] = useState<Blueprint[] | null>(null);
+  const [magicError, setMagicError] = useState<string | null>(null);
+
+  const inventory = useMemo(() => {
+    const tags: string[] = [];
+    for (const it of items) {
+      if (it.status !== "done" || !it.result) continue;
+      for (const o of it.result.objectNames ?? []) tags.push(o);
+      for (const o of it.result.objects ?? []) tags.push(o.name);
+      for (const l of it.result.labels ?? []) tags.push(l.description);
+    }
+    const seen = new Set<string>();
+    const unique: string[] = [];
+    for (const t of tags) {
+      const v = (t ?? "").trim();
+      if (!v) continue;
+      const k = v.toLowerCase();
+      if (seen.has(k)) continue;
+      seen.add(k);
+      unique.push(v);
+    }
+    return unique.slice(0, 12);
+  }, [items]);
+
+  const makeMagic = async () => {
+    if (!inventory.length) return;
+    setMagicOpen(true);
+    setMakingMagic(true);
+    setMagicError(null);
+    setBlueprints(null);
+    try {
+      const res = await fetch("/api/generate", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ inventory }),
+      });
+      const text = await res.text();
+      if (!res.ok) throw new Error(text || `Generate failed (${res.status})`);
+      const data = text ? JSON.parse(text) : null;
+      const bps = (data?.blueprints ?? []) as Blueprint[];
+      setBlueprints(bps);
+    } catch (e: any) {
+      setMagicError(e?.message ?? "Failed to make magic");
+      setBlueprints(null);
+    } finally {
+      setMakingMagic(false);
+    }
+  };
 
   const saveJsonToResources = async (filename: string, payload: unknown) => {
     const res = await fetch("/api/save-json", {
@@ -59,6 +118,9 @@ const Create = () => {
       setItems((prev) =>
         prev.map((i) => (i.id === item.id ? { ...i, status: "done", result } : i)),
       );
+      setBlueprints(null);
+      setMagicError(null);
+      setMagicOpen(false);
 
       const payload = {
         image: {
@@ -123,7 +185,7 @@ const Create = () => {
 
   return (
     <main className="min-h-screen text-foreground flex flex-col">
-      <JunkNav />
+      <JunkNav hideCta />
 
       <section className="flex-1 mx-auto w-full max-w-6xl px-6 py-12 md:py-20">
         <Link
@@ -304,11 +366,40 @@ const Create = () => {
               <button
                 disabled={!items.some((i) => i.status === "done")}
                 className="inline-flex items-center justify-center gap-2 px-5 py-2.5 font-block text-sm uppercase rounded-xl bg-grape text-paper shadow-brut-sm hover:bg-eco-forest transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                onClick={makeMagic}
               >
-                <Sparkles className="w-4 h-4" /> Make magic
+                {makingMagic ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin" /> Making magic…
+                  </>
+                ) : (
+                  <>
+                    <Sparkles className="w-4 h-4" /> Make magic
+                  </>
+                )}
               </button>
             </div>
+
+            {magicError && (
+              <div className="mt-4 font-mono text-sm text-red-stamp">
+                {magicError}
+              </div>
+            )}
           </div>
+        )}
+
+        {magicOpen && (
+          <MagicBubbles
+            fullscreen
+            onClose={() => setMagicOpen(false)}
+            loading={makingMagic}
+            items={(blueprints ?? []).map((b, idx) => ({
+              title: b.title,
+              description: b.description,
+              to: `/magic/${idx}`,
+              state: { blueprint: b },
+            }))}
+          />
         )}
       </section>
 

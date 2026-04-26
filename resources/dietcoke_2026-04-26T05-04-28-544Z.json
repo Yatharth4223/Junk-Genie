@@ -1,0 +1,50 @@
+{
+  "image": {
+    "name": "dietcoke.jpeg",
+    "size": 282197,
+    "type": "image/jpeg",
+    "lastModified": 1777141797160,
+    "analyzedAt": "2026-04-26T05:04:28.543Z"
+  },
+  "vision": {
+    "top": "Canned packaged goods",
+    "labels": [
+      {
+        "description": "Drink can",
+        "score": 0.9760487079620361
+      },
+      {
+        "description": "Aluminum can",
+        "score": 0.9630904793739319
+      },
+      {
+        "description": "Steel and tin cans",
+        "score": 0.9399347901344299
+      },
+      {
+        "description": "Tin",
+        "score": 0.9131319522857666
+      },
+      {
+        "description": "Silver",
+        "score": 0.8118158578872681
+      },
+      {
+        "description": "Logo",
+        "score": 0.7900136709213257
+      }
+    ],
+    "objects": [
+      {
+        "name": "Canned packaged goods",
+        "score": 0.5601471662521362
+      }
+    ],
+    "objectNames": [
+      "Canned packaged goods"
+    ],
+    "web": null,
+    "imageProperties": null,
+    "suggestions": []
+  }
+}
