@@ -1,0 +1,35 @@
+{
+  "image": {
+    "name": "img3.jpeg",
+    "size": 913028,
+    "type": "image/jpeg",
+    "lastModified": 1777160853226,
+    "analyzedAt": "2026-04-26T03:22:27.730Z"
+  },
+  "vision": {
+    "top": "Silver",
+    "labels": [
+      {
+        "description": "Silver",
+        "score": 0.780815601348877
+      },
+      {
+        "description": "Design",
+        "score": 0.6712303757667542
+      },
+      {
+        "description": "Still life photography",
+        "score": 0.5801084041595459
+      },
+      {
+        "description": "Knot",
+        "score": 0.5552458167076111
+      }
+    ],
+    "objects": [],
+    "objectNames": [],
+    "web": null,
+    "imageProperties": null,
+    "suggestions": []
+  }
+}
