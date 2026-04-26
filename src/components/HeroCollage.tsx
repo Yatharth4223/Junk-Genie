@@ -34,8 +34,7 @@ export const HeroCollage = () => {
           </h1>
 
           <p className="max-w-md font-mono text-base leading-relaxed text-ink-soft mb-8">
-            Snap a photo of things around your home. Our friendly genie will 
-            suggest fun projects you can build together as a family! 🌱✨
+            Snap a photo of things around your home — the whole family joins in! Perfect for parents and kids aged 6 and up. 🧒👧
           </p>
 
           <div className="flex flex-wrap items-center gap-4">
