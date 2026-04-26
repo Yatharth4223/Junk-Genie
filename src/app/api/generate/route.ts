@@ -6,9 +6,43 @@ type Blueprint = {
   difficulty: "easy" | "medium" | "hard";
   description: string;
   steps: string[];
+  stepsImageBase64?: string;
 };
 
 const MODEL = "gemma-4-26b-a4b-it";
+const IMAGE_MODEL = "gemini-2.5-flash-image";
+
+async function generateStepsImageBase64(ai: GoogleGenAI, blueprint: Blueprint) {
+  const prompt = [
+    "Generate a clean instruction image for this DIY craft.",
+    "Style: simple, high-contrast, minimal background, looks like a step-by-step guide.",
+    "Must match the craft title and the steps below.",
+    "",
+    `Craft title: ${blueprint.title}`,
+    `Difficulty: ${blueprint.difficulty}`,
+    "Steps:",
+    ...blueprint.steps.map((s, i) => `${i + 1}. ${s}`),
+  ].join("\n");
+
+  const result = await ai.models.generateContent({
+    model: IMAGE_MODEL,
+    contents: [{ role: "user", parts: [{ text: prompt }] }],
+    config: {
+      // @google/genai expects strings here.
+      responseModalities: ["IMAGE"],
+    } as any,
+  });
+
+  for (const candidate of result.candidates ?? []) {
+    const parts = candidate?.content?.parts ?? [];
+    for (const part of parts) {
+      const data = (part as any)?.inlineData?.data;
+      if (typeof data === "string" && data.length > 0) return data;
+    }
+  }
+
+  throw new Error("Image model did not return inline image data");
+}
 
 export async function POST(req: Request) {
   try {
@@ -70,7 +104,20 @@ export async function POST(req: Request) {
       );
     }
 
-    return NextResponse.json({ blueprints }, { status: 200 });
+    // Generate a craft-specific steps image for each blueprint (base64 PNG/JPEG returned by model).
+    const withImages: Blueprint[] = [];
+    for (const bp of blueprints) {
+      try {
+        const stepsImageBase64 = await generateStepsImageBase64(ai, bp);
+        withImages.push({ ...bp, stepsImageBase64 });
+      } catch (e: any) {
+        // If image generation fails, still return the blueprint text.
+        withImages.push({ ...bp, stepsImageBase64: undefined });
+        console.error("[api/generate] steps image generation failed:", e?.message ?? e);
+      }
+    }
+
+    return NextResponse.json({ blueprints: withImages }, { status: 200 });
   } catch (e: any) {
     console.error("[api/generate] error:", e);
     return NextResponse.json({ error: e?.message ?? "Generate route failed" }, { status: 500 });

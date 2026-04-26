@@ -23,6 +23,7 @@ type Blueprint = {
   difficulty: "easy" | "medium" | "hard";
   description: string;
   steps: string[];
+  stepsImageBase64?: string;
 };
 
 const Scan = () => {
@@ -395,10 +396,10 @@ const Scan = () => {
           fullscreen={magicOpen}
           onClose={() => setMagicOpen(false)}
           loading={makingMagic}
-          items={(blueprints ?? []).map((b) => ({
+          items={(blueprints ?? []).map((b, idx) => ({
             title: b.title,
             description: b.description,
-            to: `/magic/${encodeURIComponent(b.title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, ""))}`,
+            to: `/magic/${idx}`,
             state: { blueprint: b },
           }))}
         />

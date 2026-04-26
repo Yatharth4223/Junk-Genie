@@ -24,6 +24,7 @@ type Blueprint = {
   difficulty: "easy" | "medium" | "hard";
   description: string;
   steps: string[];
+  stepsImageBase64?: string;
 };
 
 function safeName(name: string) {

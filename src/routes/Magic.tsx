@@ -10,6 +10,7 @@ type Blueprint = {
   difficulty: "easy" | "medium" | "hard";
   description: string;
   steps: string[];
+  stepsImageBase64?: string;
   stepsImageSrc?: string;
 };
 
@@ -75,7 +76,11 @@ const Magic = () => {
           <div className="flex flex-col md:flex-row gap-6">
             <div className="md:w-[42%]">
               <img
-                src={staticImageUrl(blueprint.stepsImageSrc ?? guideForAi)}
+                src={
+                  blueprint.stepsImageBase64
+                    ? `data:image/png;base64,${blueprint.stepsImageBase64}`
+                    : staticImageUrl(blueprint.stepsImageSrc ?? guideForAi)
+                }
                 alt="Steps reference"
                 className="w-full h-auto border-2 border-ink rounded-xl shadow-brut-sm bg-paper"
               />
