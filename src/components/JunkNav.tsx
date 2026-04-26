@@ -35,7 +35,7 @@ export const JunkNav = () => (
     {/* Outside header: backdrop-filter on header creates a containing block and breaks fixed positioning */}
     <Link
       to="/create"
-      className="fixed right-4 top-[max(1rem,env(safe-area-inset-top))] z-50 flex items-center gap-2 bg-grape text-paper px-5 py-2.5 font-block text-sm uppercase rounded-xl shadow-brut-sm hover:bg-eco-forest transition-colors sm:right-6 md:top-5"
+      className="fixed right-4 bottom-[max(2rem,env(safe-area-inset-bottom))] z-50 flex items-center gap-2 bg-grape text-paper px-5 py-2.5 font-block text-sm uppercase rounded-xl shadow-brut-sm hover:bg-eco-forest transition-colors sm:right-6 md:bottom-8"
     >
       <Camera className="w-4 h-4" /> Upload & generate 🪄
     </Link>
