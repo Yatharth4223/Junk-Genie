@@ -18,7 +18,7 @@ async def manual(request: ManualRequest):
         if not projects:
             raise HTTPException(
                 status_code=400,
-                detail="No session found. Call /analyze first."
+                detail="No session found. Call /api/analyze first."
             )
 
         if request.project_index < 0 or request.project_index >= len(projects):

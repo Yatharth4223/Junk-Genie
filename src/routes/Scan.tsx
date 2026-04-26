@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { ArrowLeft, Camera, CircleDot, Square, Sparkles, AlertTriangle, Loader2, X } from "lucide-react";
 import { JunkNav } from "@/components/JunkNav";
 import { JunkFooter } from "@/components/JunkFooter";
@@ -27,6 +27,8 @@ type Blueprint = {
 };
 
 const Scan = () => {
+  const navigate = useNavigate();
+  const loc = useLocation();
   const videoRef = useRef<HTMLVideoElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
   const intervalRef = useRef<number | null>(null);
@@ -41,6 +43,17 @@ const Scan = () => {
   const [makingMagic, setMakingMagic] = useState(false);
   const [blueprints, setBlueprints] = useState<Blueprint[] | null>(null);
   const [magicError, setMagicError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const st = loc.state as { restoreMagicOverlay?: boolean; allBlueprints?: Blueprint[] } | null;
+    if (st?.restoreMagicOverlay && st.allBlueprints && st.allBlueprints.length > 0) {
+      setBlueprints(st.allBlueprints);
+      setMagicOpen(true);
+      setMakingMagic(false);
+      setMagicError(null);
+      navigate("/create/scan", { replace: true, state: {} });
+    }
+  }, [loc.state, navigate]);
 
   const stopCamera = useCallback(() => {
     if (intervalRef.current) {
@@ -400,7 +413,11 @@ const Scan = () => {
             title: b.title,
             description: b.description,
             to: `/magic/${idx}`,
-            state: { blueprint: b },
+            state: {
+              blueprint: b,
+              allBlueprints: blueprints ?? [],
+              bubblesPath: "/create/scan",
+            },
           }))}
         />
       </section>

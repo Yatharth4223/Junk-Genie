@@ -1,0 +1,65 @@
+{
+  "image": {
+    "name": "img2.jpeg",
+    "size": 597303,
+    "type": "image/jpeg",
+    "lastModified": 1777160840427,
+    "analyzedAt": "2026-04-26T05:55:49.680Z"
+  },
+  "vision": {
+    "top": "1D barcode",
+    "labels": [
+      {
+        "description": "Blue",
+        "score": 0.9886479377746582
+      },
+      {
+        "description": "Bottle",
+        "score": 0.9883776903152466
+      },
+      {
+        "description": "Fluid",
+        "score": 0.9558092355728149
+      },
+      {
+        "description": "Plastic bottle",
+        "score": 0.9486140012741089
+      },
+      {
+        "description": "Liquid",
+        "score": 0.9215670228004456
+      },
+      {
+        "description": "Water bottle",
+        "score": 0.8952184319496155
+      }
+    ],
+    "objects": [
+      {
+        "name": "1D barcode",
+        "score": 0.8626500368118286
+      },
+      {
+        "name": "Bottled and jarred packaged goods",
+        "score": 0.7935786247253418
+      },
+      {
+        "name": "Bottle",
+        "score": 0.7439861297607422
+      },
+      {
+        "name": "Bottle",
+        "score": 0.5671709775924683
+      }
+    ],
+    "objectNames": [
+      "1D barcode",
+      "Bottled and jarred packaged goods",
+      "Bottle",
+      "Bottle"
+    ],
+    "web": null,
+    "imageProperties": null,
+    "suggestions": []
+  }
+}

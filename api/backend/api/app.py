@@ -11,5 +11,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(analyze.router)
-app.include_router(manual.router)
+# Prefix /api so the same public paths work behind Next rewrites in dev and on Vercel.
+app.include_router(analyze.router, prefix="/api")
+app.include_router(manual.router, prefix="/api")

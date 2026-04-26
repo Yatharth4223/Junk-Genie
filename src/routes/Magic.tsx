@@ -1,5 +1,6 @@
-import { Link, useLocation } from "react-router-dom";
-import { ArrowLeft, Sparkles } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { ArrowLeft, Sparkles, Loader2 } from "lucide-react";
 import { JunkNav } from "@/components/JunkNav";
 import { JunkFooter } from "@/components/JunkFooter";
 import guideForAi from "@/assets/guideForAi.png";
@@ -14,9 +15,61 @@ type Blueprint = {
   stepsImageSrc?: string;
 };
 
+type MagicLocationState = {
+  blueprint?: Blueprint;
+  allBlueprints?: Blueprint[];
+  bubblesPath?: string;
+};
+
 const Magic = () => {
-  const location = useLocation() as { state?: { blueprint?: Blueprint } };
+  const location = useLocation() as { state?: MagicLocationState };
+  const navigate = useNavigate();
   const blueprint = location.state?.blueprint;
+  const allBlueprints = location.state?.allBlueprints;
+  const bubblesPath = location.state?.bubblesPath ?? "/create";
+
+  const [stepsImageBase64, setStepsImageBase64] = useState<string | null>(
+    blueprint?.stepsImageBase64 ?? null,
+  );
+  const [imageLoading, setImageLoading] = useState(!blueprint?.stepsImageBase64);
+  const [imageError, setImageError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!blueprint) return;
+    if (blueprint.stepsImageBase64) {
+      setStepsImageBase64(blueprint.stepsImageBase64);
+      setImageLoading(false);
+      return;
+    }
+
+    let cancelled = false;
+    (async () => {
+      setImageLoading(true);
+      setImageError(null);
+      try {
+        const res = await fetch("/api/generate-image", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({ blueprint }),
+        });
+        const text = await res.text();
+        if (!res.ok) throw new Error(text || `Image gen failed (${res.status})`);
+        const data = text ? JSON.parse(text) : null;
+        const b64 = data?.stepsImageBase64 as string | undefined;
+        if (cancelled) return;
+        if (b64) setStepsImageBase64(b64);
+        else setImageError("No image returned");
+      } catch (e: unknown) {
+        if (!cancelled) setImageError(e instanceof Error ? e.message : "Could not generate steps image");
+      } finally {
+        if (!cancelled) setImageLoading(false);
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [blueprint]);
 
   if (!blueprint) {
     return (
@@ -42,63 +95,86 @@ const Magic = () => {
     );
   }
 
+  const imageSrc = stepsImageBase64
+    ? `data:image/png;base64,${stepsImageBase64}`
+    : staticImageUrl(blueprint.stepsImageSrc ?? guideForAi);
+
   return (
     <main className="min-h-screen text-foreground flex flex-col">
       <JunkNav />
 
-      <section className="flex-1 mx-auto w-full max-w-3xl px-4 sm:px-6 py-10 md:py-16">
-        <Link
-          to={-1 as any}
-          onClick={(e) => {
-            e.preventDefault();
-            window.history.back();
-          }}
-          className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-ink-soft hover:text-grape transition-colors mb-6"
-        >
-          <ArrowLeft className="w-4 h-4" /> back
-        </Link>
-
-        <div className="inline-flex items-center gap-2 bg-eco-sage/40 border-2 border-eco-forest rounded-full px-4 py-1.5 font-mono text-[11px] uppercase tracking-widest mb-5">
-          <Sparkles className="w-3.5 h-3.5 text-grape" /> magic blueprint
-        </div>
-
-        <h1 className="font-display text-4xl md:text-6xl leading-[0.95] mb-3">
-          {blueprint.title}
-        </h1>
-        <p className="font-mono text-sm text-ink-soft mb-6">
-          <span className="text-ink">Difficulty:</span>{" "}
-          <span className="text-grape">{blueprint.difficulty}</span>
-        </p>
-
-        <div className="bg-eco-sage/30 border-2 border-eco-forest rounded-2xl p-6 shadow-brut-sm mb-6">
-          <h2 className="font-block text-xl uppercase mb-4">Steps</h2>
-
-          <div className="flex flex-col md:flex-row gap-6">
-            <div className="md:w-[42%]">
-              <img
-                src={
-                  blueprint.stepsImageBase64
-                    ? `data:image/png;base64,${blueprint.stepsImageBase64}`
-                    : staticImageUrl(blueprint.stepsImageSrc ?? guideForAi)
-                }
-                alt="Steps reference"
-                className="w-full h-auto border-2 border-ink rounded-xl shadow-brut-sm bg-paper"
-              />
-            </div>
-
-            <div className="md:flex-1">
-              <ol className="list-decimal pl-5 font-mono text-sm space-y-2 text-ink">
-                {blueprint.steps.map((s, i) => (
-                  <li key={i}>{s}</li>
-                ))}
-              </ol>
-            </div>
+      <section className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 py-8 md:py-12 lg:py-16">
+        <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
+          <button
+            type="button"
+            onClick={() => {
+              if (allBlueprints?.length) {
+                navigate(bubblesPath, {
+                  state: { restoreMagicOverlay: true, allBlueprints },
+                });
+              } else {
+                navigate(-1);
+              }
+            }}
+            className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-ink-soft transition-colors hover:text-grape"
+          >
+            <ArrowLeft className="h-4 w-4" /> back
+          </button>
+          <div className="inline-flex items-center gap-2 rounded-full border-2 border-eco-forest bg-eco-sage/40 px-4 py-1.5 font-mono text-[11px] uppercase tracking-widest">
+            <Sparkles className="h-3.5 w-3.5 text-grape" /> magic blueprint
           </div>
         </div>
 
-        <div className="bg-paper border-2 border-ink rounded-2xl p-6 shadow-brut-sm">
-          <h2 className="font-block text-xl uppercase mb-2">What you’ll make</h2>
-          <p className="font-mono text-sm text-ink">{blueprint.description}</p>
+        <div className="mb-8 lg:mb-10">
+          <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[0.95] text-balance">
+            {blueprint.title}
+          </h1>
+          <p className="mt-3 font-mono text-sm text-ink-soft">
+            <span className="text-ink">Difficulty:</span>{" "}
+            <span className="text-grape font-medium uppercase">{blueprint.difficulty}</span>
+          </p>
+        </div>
+
+        <div className="grid min-h-0 grid-cols-1 gap-8 lg:grid-cols-12 lg:items-stretch lg:gap-10 xl:gap-12">
+          <div className="order-1 flex min-h-0 flex-col gap-2 lg:col-span-7 lg:h-full lg:min-h-0 xl:col-span-8">
+            <div className="flex w-full min-h-[min(50vh,22rem)] flex-1 flex-col overflow-hidden rounded-2xl border-2 border-ink bg-paper shadow-brut sm:min-h-[min(55vh,26rem)] sm:rounded-3xl lg:min-h-0">
+              {imageLoading ? (
+                <div className="flex min-h-0 flex-1 flex-col items-center justify-center gap-4 bg-ink/15 px-6 py-12">
+                  <Loader2 className="h-12 w-12 animate-spin text-grape" />
+                  <p className="text-center font-mono text-sm text-ink">Drawing your step guide…</p>
+                </div>
+              ) : (
+                <div className="relative flex min-h-0 flex-1 items-center justify-center bg-gradient-to-b from-paper to-eco-sage/20 p-1 sm:p-2">
+                  <img
+                    src={imageSrc}
+                    alt="Steps reference"
+                    className="max-h-full min-h-0 max-w-full object-contain object-center"
+                  />
+                </div>
+              )}
+            </div>
+            {imageError && !imageLoading && (
+              <p className="shrink-0 font-mono text-xs text-ink-soft">{imageError}</p>
+            )}
+          </div>
+
+          <div className="order-2 flex min-h-0 flex-col gap-6 lg:col-span-5 xl:col-span-4">
+            <div className="rounded-2xl border-2 border-eco-forest bg-eco-sage/30 p-5 shadow-brut-sm sm:p-6">
+              <h2 className="font-block text-lg uppercase tracking-wide text-ink sm:text-xl">Steps</h2>
+              <ol className="mt-4 list-decimal space-y-3 pl-5 font-mono text-sm leading-relaxed text-ink sm:text-[0.95rem]">
+                {blueprint.steps.map((s, i) => (
+                  <li key={i} className="pl-1">
+                    {s}
+                  </li>
+                ))}
+              </ol>
+            </div>
+
+            <div className="rounded-2xl border-2 border-ink bg-paper p-5 shadow-brut-sm sm:p-6">
+              <h2 className="font-block text-lg uppercase sm:text-xl">What you’ll make</h2>
+              <p className="mt-2 font-mono text-sm leading-relaxed text-ink/95">{blueprint.description}</p>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -108,4 +184,3 @@ const Magic = () => {
 };
 
 export default Magic;
-
