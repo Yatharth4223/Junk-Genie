@@ -12,7 +12,7 @@ def get_manual_prompt(project: ProjectDTO) -> list:
     )
 
     panels = "\n\n---\n\n".join(
-        f"GRID PANEL {step.step_number}: {step.action_description_for_imagen}"
+        f"GRID PANEL {step.step_number}: {step.imagen_step_description}"
         for step in project.steps
     )
 

@@ -14,7 +14,7 @@ class StepDTO(BaseModel):
     step_number: int
     title: str
     instruction_text: str
-    action_description_for_imagen: str
+    imagen_step_description: str
     items_in_frame: List[str]
 
 
