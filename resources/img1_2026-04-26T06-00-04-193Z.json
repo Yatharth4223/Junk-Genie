@@ -1,0 +1,50 @@
+{
+  "image": {
+    "name": "img1.jpeg",
+    "size": 595869,
+    "type": "image/jpeg",
+    "lastModified": 1777160828918,
+    "analyzedAt": "2026-04-26T06:00:04.193Z"
+  },
+  "vision": {
+    "top": "Mobile phone",
+    "labels": [
+      {
+        "description": "Electronic device",
+        "score": 0.9733080863952637
+      },
+      {
+        "description": "Gadget",
+        "score": 0.9701265692710876
+      },
+      {
+        "description": "Mobile phone",
+        "score": 0.9100529551506042
+      },
+      {
+        "description": "Communication Device",
+        "score": 0.8810715675354004
+      },
+      {
+        "description": "Telephony",
+        "score": 0.8684850931167603
+      },
+      {
+        "description": "Technology",
+        "score": 0.8509397506713867
+      }
+    ],
+    "objects": [
+      {
+        "name": "Mobile phone",
+        "score": 0.865057647228241
+      }
+    ],
+    "objectNames": [
+      "Mobile phone"
+    ],
+    "web": null,
+    "imageProperties": null,
+    "suggestions": []
+  }
+}

@@ -1,6 +1,6 @@
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Camera, Upload, Image as ImageIcon, X, ArrowLeft, Sparkles, Loader2, AlertCircle } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { JunkNav } from "@/components/JunkNav";
 import { JunkFooter } from "@/components/JunkFooter";
 import { ProcessSteps } from "@/components/ProcessSteps";
@@ -33,6 +33,7 @@ function safeName(name: string) {
 
 const Create = () => {
   const navigate = useNavigate();
+  const loc = useLocation();
   const [mode, setMode] = useState<"none" | "upload">("none");
   const [items, setItems] = useState<ImageItem[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -40,6 +41,17 @@ const Create = () => {
   const [makingMagic, setMakingMagic] = useState(false);
   const [blueprints, setBlueprints] = useState<Blueprint[] | null>(null);
   const [magicError, setMagicError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const st = loc.state as { restoreMagicOverlay?: boolean; allBlueprints?: Blueprint[] } | null;
+    if (st?.restoreMagicOverlay && st.allBlueprints && st.allBlueprints.length > 0) {
+      setBlueprints(st.allBlueprints);
+      setMagicOpen(true);
+      setMakingMagic(false);
+      setMagicError(null);
+      navigate("/create", { replace: true, state: {} });
+    }
+  }, [loc.state, navigate]);
 
   const inventory = useMemo(() => {
     const tags: string[] = [];
@@ -397,7 +409,11 @@ const Create = () => {
               title: b.title,
               description: b.description,
               to: `/magic/${idx}`,
-              state: { blueprint: b },
+              state: {
+                blueprint: b,
+                allBlueprints: blueprints ?? [],
+                bubblesPath: "/create",
+              },
             }))}
           />
         )}

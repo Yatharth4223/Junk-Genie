@@ -36,9 +36,9 @@ export const JunkNav = ({ hideCta }: { hideCta?: boolean }) => (
     {!hideCta && (
       <Link
         to="/create"
-        className="fixed right-4 bottom-[max(2rem,env(safe-area-inset-bottom))] z-50 flex items-center gap-2 bg-grape text-paper px-5 py-2.5 font-block text-sm uppercase rounded-xl shadow-brut-sm hover:bg-eco-forest transition-colors sm:right-6 md:bottom-8"
+        className="fixed right-4 bottom-[max(2rem,env(safe-area-inset-bottom))] z-50 flex items-center gap-2.5 bg-grape text-paper px-6 py-3.5 font-block text-base uppercase tracking-wide rounded-2xl border-2 border-paper/25 shadow-brut ring-2 ring-caution/60 ring-offset-2 ring-offset-black/0 hover:ring-caution/90 hover:shadow-brut transition-all duration-200 hover:scale-[1.03] hover:bg-eco-forest sm:right-6 md:bottom-8"
       >
-        <Camera className="w-4 h-4" /> Upload & generate 🪄
+        <Camera className="w-5 h-5 shrink-0" /> Upload & generate 🪄
       </Link>
     )}
   </>
