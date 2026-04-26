@@ -19,10 +19,6 @@ export const Manifesto = () => (
     <div className="relative mx-auto max-w-7xl px-6">
       <div className="max-w-3xl">
         <span className="stamp text-xs">house rules 🎈</span>
-        <h2 className="mt-6 font-display text-5xl md:text-7xl text-paper leading-none">
-          We don't make <span className="line-through text-paper/40">stuff</span>. <br/>
-          We make <span className="font-marker text-caution">happy memories.</span> 🤗
-        </h2>
       </div>
 
       <div className="mt-14 grid sm:grid-cols-2 lg:grid-cols-4 gap-5">

@@ -4,7 +4,6 @@ import beforeCans from "@/assets/before-cans.png";
 import afterPlanter from "@/assets/after-planter.png";
 import beforePallet from "@/assets/before-pallet.png";
 import afterShelf from "@/assets/after-shelf.png";
-import lamp from "@/assets/upcycled-lamp.png";
 
 const items = [
   { before: beforeCans, after: afterPlanter, title: "old soup cans", to: "happy plant pals 🪴", time: "1.5 hr", diff: "kid friendly" },
@@ -73,24 +72,6 @@ export const Transformations = () => {
           ))}
         </div>
 
-        {/* bonus floating polaroid */}
-        <div className="relative mt-20 grid md:grid-cols-3 gap-6 items-center">
-          <div className="md:col-span-1 r-l3">
-            <div className="bg-paper border-2 border-ink p-3 pb-12 brut-lg relative">
-              <span className="tape" style={{top: -12, left: 30}} />
-              <img src={staticImageUrl(lamp)} alt="Mason jar lamp" width={1024} height={1024} loading="lazy"
-                   className="w-full aspect-square object-contain bg-paper-dark border border-ink" />
-              <div className="absolute bottom-3 left-0 right-0 text-center font-hand text-2xl text-ink">
-                jar → vibe lamp 💡
-              </div>
-            </div>
-          </div>
-          <div className="md:col-span-2">
-            <div className="font-display text-4xl md:text-5xl leading-tight">
-              <span className="font-marker text-rust"></span> happy little projects built by families who said <span className="font-hand text-grape">"hey, what if we made THIS?"</span> 🎨🛠️
-            </div>
-          </div>
-        </div>
       </div>
     </section>
   );

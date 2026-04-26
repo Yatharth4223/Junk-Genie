@@ -39,12 +39,14 @@ export const JunkFooter = () => (
           Check Implementation!
         </div>
         <div className="flex items-center gap-3">
-          <a href="#" className="grid place-items-center w-10 h-10 border-2 border-paper text-paper hover:bg-rust hover:border-rust transition">
+          <a href="https://github.com/Yatharth4223/Junk-Genie" className="grid place-items-center w-10 h-10 border-2 border-paper text-paper hover:bg-rust hover:border-rust transition">
             <Github className="w-4 h-4" />
           </a>
 
           <a
-            href="#"
+            href="https://devpost.com/software/junkgenie?ref_content=my-projects-tab&ref_feature=my_projects"
+            target="_blank"
+            rel="noreferrer"
             className="grid place-items-center w-10 h-10 border-2 border-paper text-paper hover:bg-rust hover:border-rust transition"
           >
             <img

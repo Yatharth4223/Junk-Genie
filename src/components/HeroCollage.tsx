@@ -1,6 +1,7 @@
 import junkPile from "@/assets/junk-pile.png";
 import { staticImageUrl } from "@/lib/staticImageUrl";
 import { ArrowRight, Sparkles, Wand2, Star, Heart, Leaf } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export const HeroCollage = () => {
   return (
@@ -38,11 +39,14 @@ export const HeroCollage = () => {
           </p>
 
           <div className="flex flex-wrap items-center gap-4">
-            <button className="group bg-eco-forest text-paper font-block uppercase text-base px-8 py-4 rounded-xl shadow-brut hover:bg-eco-leaf transition-colors flex items-center gap-3">
+            <Link
+              to="/create"
+              className="group bg-eco-forest text-paper font-block uppercase text-base px-8 py-4 rounded-xl shadow-brut hover:bg-eco-leaf transition-colors flex items-center gap-3"
+            >
               <Wand2 className="w-5 h-5" />
               Start Creating!
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition" />
-            </button>
+            </Link>
             <button className="bg-paper border-2 border-eco-forest text-ink font-block uppercase text-base px-6 py-4 rounded-xl shadow-brut-sm hover:bg-eco-sage/30 transition-colors">
               See How It Works
             </button>

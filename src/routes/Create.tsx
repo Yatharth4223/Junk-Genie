@@ -3,6 +3,7 @@ import { Camera, Upload, Image as ImageIcon, X, ArrowLeft, Sparkles, Loader2, Al
 import { Link, useNavigate } from "react-router-dom";
 import { JunkNav } from "@/components/JunkNav";
 import { JunkFooter } from "@/components/JunkFooter";
+import { ProcessSteps } from "@/components/ProcessSteps";
 import { detectFromBase64, topTwoByConfidence, type VisionResult } from "@/lib/vision";
 import { toast } from "sonner";
 
@@ -132,60 +133,66 @@ const Create = () => {
           <ArrowLeft className="w-4 h-4" /> back home
         </Link>
 
-        <div className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 bg-eco-sage/40 border-2 border-eco-forest rounded-full px-4 py-1.5 font-mono text-[11px] uppercase tracking-widest mb-6">
-            <Sparkles className="w-3.5 h-3.5 text-grape" /> step one of magic
+        {/* Create page layout: steps on top, actions below */}
+        <div className="flex flex-col gap-10">
+          {/* Top: How the magic happens (already horizontal inside) */}
+          <ProcessSteps />
+
+          <div className="mx-auto flex max-w-2xl flex-col items-center text-center">
+            <div className="inline-flex items-center gap-2 bg-eco-sage/40 border-2 border-eco-forest rounded-full px-4 py-1.5 font-mono text-[11px] uppercase tracking-widest mb-6">
+              <Sparkles className="w-3.5 h-3.5 text-grape" /> step one of magic
+            </div>
+            <h1 className="font-display text-4xl md:text-6xl leading-[0.95] mb-4">
+              How do you want to <span className="text-grape">share your junk?</span>
+            </h1>
+            <p className="font-mono text-sm md:text-base text-ink-soft max-w-xl mx-auto">
+              Pick a way to show the genie what you've got. We'll handle the rest. ✨
+            </p>
           </div>
-          <h1 className="font-display text-4xl md:text-6xl leading-[0.95] mb-4">
-            How do you want to <span className="text-grape">share your junk?</span>
-          </h1>
-          <p className="font-mono text-sm md:text-base text-ink-soft max-w-xl mx-auto">
-            Pick a way to show the genie what you've got. We'll handle the rest. ✨
-          </p>
-        </div>
 
-        {/* Option cards */}
-        <div className="grid md:grid-cols-2 gap-6 md:gap-8">
-          {/* SCAN */}
-          <button
-            type="button"
-            onClick={() => navigate("/create/scan")}
-            className="group text-left bg-paper border-2 border-ink rounded-2xl p-8 shadow-brut-sm hover:-translate-y-1 hover:shadow-brut transition-all"
-          >
-            <div className="w-16 h-16 rounded-2xl bg-eco-leaf/30 border-2 border-eco-forest flex items-center justify-center mb-5 group-hover:rotate-6 transition-transform">
-              <Camera className="w-8 h-8 text-eco-forest" strokeWidth={2.5} />
-            </div>
-            <h2 className="font-block text-2xl uppercase mb-2">Scan it live 📸</h2>
-            <p className="font-mono text-sm text-ink-soft mb-5">
-              Point your camera at the pile. The genie peeks through the lens in real time.
-            </p>
-            <span className="inline-flex items-center gap-2 bg-eco-forest text-paper px-4 py-2 font-block text-xs uppercase rounded-xl">
-              Start scanning
-            </span>
-          </button>
+          {/* Bottom: Upload + Scan (horizontal line) */}
+          <div className="grid md:grid-cols-2 gap-6 md:gap-8">
+            {/* UPLOAD */}
+            <button
+              type="button"
+              onClick={() => {
+                setMode("upload");
+                fileInputRef.current?.click();
+              }}
+              className={`group text-left bg-paper border-2 border-ink rounded-2xl p-8 shadow-brut-sm hover:-translate-y-1 hover:shadow-brut transition-all ${
+                mode === "upload" ? "ring-4 ring-grape/40 -translate-y-1" : ""
+              }`}
+            >
+              <div className="w-16 h-16 rounded-2xl bg-bubble-pink/40 border-2 border-grape flex items-center justify-center mb-5 group-hover:-rotate-6 transition-transform">
+                <Upload className="w-8 h-8 text-grape" strokeWidth={2.5} />
+              </div>
+              <h2 className="font-block text-2xl uppercase mb-2">Upload pics 🖼️</h2>
+              <p className="font-mono text-sm text-ink-soft mb-5">
+                Already snapped them? Drop up to {MAX_IMAGES} photos &mdash; we'll ID each one live.
+              </p>
+              <span className="inline-flex items-center gap-2 bg-grape text-paper px-4 py-2 font-block text-xs uppercase rounded-xl">
+                Choose images
+              </span>
+            </button>
 
-          {/* UPLOAD */}
-          <button
-            type="button"
-            onClick={() => {
-              setMode("upload");
-              fileInputRef.current?.click();
-            }}
-            className={`group text-left bg-paper border-2 border-ink rounded-2xl p-8 shadow-brut-sm hover:-translate-y-1 hover:shadow-brut transition-all ${
-              mode === "upload" ? "ring-4 ring-grape/40 -translate-y-1" : ""
-            }`}
-          >
-            <div className="w-16 h-16 rounded-2xl bg-bubble-pink/40 border-2 border-grape flex items-center justify-center mb-5 group-hover:-rotate-6 transition-transform">
-              <Upload className="w-8 h-8 text-grape" strokeWidth={2.5} />
-            </div>
-            <h2 className="font-block text-2xl uppercase mb-2">Upload pics 🖼️</h2>
-            <p className="font-mono text-sm text-ink-soft mb-5">
-              Already snapped them? Drop up to {MAX_IMAGES} photos &mdash; we'll ID each one live.
-            </p>
-            <span className="inline-flex items-center gap-2 bg-grape text-paper px-4 py-2 font-block text-xs uppercase rounded-xl">
-              Choose images
-            </span>
-          </button>
+            {/* SCAN */}
+            <button
+              type="button"
+              onClick={() => navigate("/create/scan")}
+              className="group text-left bg-paper border-2 border-ink rounded-2xl p-8 shadow-brut-sm hover:-translate-y-1 hover:shadow-brut transition-all"
+            >
+              <div className="w-16 h-16 rounded-2xl bg-eco-leaf/30 border-2 border-eco-forest flex items-center justify-center mb-5 group-hover:rotate-6 transition-transform">
+                <Camera className="w-8 h-8 text-eco-forest" strokeWidth={2.5} />
+              </div>
+              <h2 className="font-block text-2xl uppercase mb-2">Scan it live 📸</h2>
+              <p className="font-mono text-sm text-ink-soft mb-5">
+                Point your camera at the pile. The genie peeks through the lens in real time.
+              </p>
+              <span className="inline-flex items-center gap-2 bg-eco-forest text-paper px-4 py-2 font-block text-xs uppercase rounded-xl">
+                Start scanning
+              </span>
+            </button>
+          </div>
         </div>
 
         {/* Hidden input */}
