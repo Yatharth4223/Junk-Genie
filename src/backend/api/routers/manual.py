@@ -4,7 +4,7 @@ from fastapi import APIRouter, HTTPException
 from models.dtos import ManualRequest, ManualResponse
 from service.gemma_service import project_instructions
 from service.prompt_service import get_manual_prompt
-from service.image_service import generate_image
+from service.image_service import generate_image, save_image
 from api.session import get_projects
 
 router = APIRouter()
@@ -33,6 +33,7 @@ async def manual(request: ManualRequest):
         project = project_instructions(selected)
         contents = get_manual_prompt(project)
         image_bytes = await loop.run_in_executor(None, generate_image, contents)
+        save_image(image_bytes, "manual.png")
 
         return ManualResponse(
             project=project,

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import genieLogo from "@/assets/genie-logo.png";
 import { staticImageUrl } from "@/lib/staticImageUrl";
 
-export const JunkNav = () => (
+export const JunkNav = ({ hideCta }: { hideCta?: boolean }) => (
   <>
     <header className="relative z-30 border-b-2 border-eco-forest bg-paper/90 backdrop-blur-sm">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
@@ -33,11 +33,13 @@ export const JunkNav = () => (
     </header>
 
     {/* Outside header: backdrop-filter on header creates a containing block and breaks fixed positioning */}
-    <Link
-      to="/create"
-      className="fixed right-4 bottom-[max(2rem,env(safe-area-inset-bottom))] z-50 flex items-center gap-2 bg-grape text-paper px-5 py-2.5 font-block text-sm uppercase rounded-xl shadow-brut-sm hover:bg-eco-forest transition-colors sm:right-6 md:bottom-8"
-    >
-      <Camera className="w-4 h-4" /> Upload & generate 🪄
-    </Link>
+    {!hideCta && (
+      <Link
+        to="/create"
+        className="fixed right-4 bottom-[max(2rem,env(safe-area-inset-bottom))] z-50 flex items-center gap-2 bg-grape text-paper px-5 py-2.5 font-block text-sm uppercase rounded-xl shadow-brut-sm hover:bg-eco-forest transition-colors sm:right-6 md:bottom-8"
+      >
+        <Camera className="w-4 h-4" /> Upload & generate 🪄
+      </Link>
+    )}
   </>
 );

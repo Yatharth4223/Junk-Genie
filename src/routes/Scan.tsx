@@ -4,6 +4,7 @@ import { ArrowLeft, Camera, CircleDot, Square, Sparkles, AlertTriangle, Loader2,
 import { JunkNav } from "@/components/JunkNav";
 import { JunkFooter } from "@/components/JunkFooter";
 import { captureFrame, detectFromBase64, type VisionResult } from "@/lib/vision";
+import { MagicBubbles } from "@/components/MagicBubbles";
 
 type Status = "idle" | "starting" | "live" | "error";
 
@@ -35,6 +36,7 @@ const Scan = () => {
   const [scanning, setScanning] = useState(false);
   const [stopped, setStopped] = useState(false);
   const [detected, setDetected] = useState<DetectedItem[]>([]);
+  const [magicOpen, setMagicOpen] = useState(false);
   const [makingMagic, setMakingMagic] = useState(false);
   const [blueprints, setBlueprints] = useState<Blueprint[] | null>(null);
   const [magicError, setMagicError] = useState<string | null>(null);
@@ -56,6 +58,7 @@ const Scan = () => {
     setErrorMsg(null);
     setMagicError(null);
     setBlueprints(null);
+    setMagicOpen(false);
     setStatus("starting");
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
@@ -172,6 +175,7 @@ const Scan = () => {
 
   const makeMagic = async () => {
     if (!inventory.length) return;
+    setMagicOpen(true);
     setMakingMagic(true);
     setMagicError(null);
     try {
@@ -225,7 +229,7 @@ const Scan = () => {
 
   return (
     <main className="min-h-screen text-foreground flex flex-col">
-      <JunkNav />
+      <JunkNav hideCta />
 
       <section className="flex-1 mx-auto w-full max-w-5xl px-4 sm:px-6 py-8 md:py-12">
         <Link
@@ -386,28 +390,18 @@ const Scan = () => {
           </div>
         )}
 
-        {/* Magic result */}
-        {blueprints && blueprints.length > 0 && (
-          <div className="mt-8 bg-paper border-2 border-ink rounded-2xl p-6 shadow-brut-sm">
-            <div className="font-mono text-[11px] uppercase tracking-widest text-ink-soft mb-4">Ideas</div>
-            <div className="grid md:grid-cols-3 gap-4">
-              {blueprints.map((b, idx) => (
-                <div key={`${b.title}-${idx}`} className="bg-eco-sage/20 border-2 border-eco-forest rounded-2xl p-5 shadow-brut-sm">
-                  <div className="font-block text-lg uppercase mb-1">{b.title}</div>
-                  <div className="font-mono text-[11px] uppercase tracking-widest text-ink-soft mb-3">
-                    {b.difficulty}
-                  </div>
-                  <p className="font-mono text-sm text-ink mb-3">{b.description}</p>
-                  <ol className="list-decimal pl-5 font-mono text-xs text-ink-soft space-y-1">
-                    {b.steps.slice(0, 5).map((s, i) => (
-                      <li key={i}>{s}</li>
-                    ))}
-                  </ol>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
+        {/* Magic bubbles overlay */}
+        <MagicBubbles
+          fullscreen={magicOpen}
+          onClose={() => setMagicOpen(false)}
+          loading={makingMagic}
+          items={(blueprints ?? []).map((b) => ({
+            title: b.title,
+            description: b.description,
+            to: `/magic/${encodeURIComponent(b.title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, ""))}`,
+            state: { blueprint: b },
+          }))}
+        />
       </section>
 
       <JunkFooter />

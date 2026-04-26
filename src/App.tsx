@@ -8,6 +8,7 @@ import NotFound from "./routes/NotFound.tsx";
 import Create from "./routes/Create.tsx";
 import Scan from "./routes/Scan.tsx";
 import Idea from "./routes/Idea.tsx";
+import Magic from "./routes/Magic.tsx";
 
 const queryClient = new QueryClient();
 
@@ -22,6 +23,7 @@ const App = () => (
           <Route path="/create" element={<Create />} />
           <Route path="/create/scan" element={<Scan />} />
           <Route path="/ideas/:slug" element={<Idea />} />
+          <Route path="/magic/:idx" element={<Magic />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
